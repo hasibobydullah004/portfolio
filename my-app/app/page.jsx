@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // ============================================================================
 // DATA DEFINITIONS & COLOR PALETTES
@@ -315,7 +315,21 @@ const monthsData = [
 export default function HomePage() {
   // Client States
   const [activeNumber, setActiveNumber] = useState(0);
-  const [activeCraft, setActiveCraft] = useState('sv-4');
+  const [activeCraft, setActiveCraft] = useState('sv-1');
+  const [isCraftHovered, setIsCraftHovered] = useState(false);
+
+  // Auto-advance crafts when not hovering
+  useEffect(() => {
+    if (isCraftHovered) return;
+    const interval = setInterval(() => {
+      setActiveCraft((curr) => {
+        const idx = craftsData.findIndex((c) => c.id === curr);
+        const next = (idx + 1) % craftsData.length;
+        return craftsData[next].id;
+      });
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isCraftHovered]);
   const [activeWorkFilter, setActiveWorkFilter] = useState('all');
   const [hoveredWorkId, setHoveredWorkId] = useState('p5');
   const [budgetVal, setBudgetVal] = useState(18);
@@ -586,7 +600,11 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="crafts-container">
+            <div 
+              className="crafts-container"
+              onMouseEnter={() => setIsCraftHovered(true)}
+              onMouseLeave={() => setIsCraftHovered(false)}
+            >
               {craftsData.map((craft) => {
                 const isActive = activeCraft === craft.id;
                 return (
@@ -599,6 +617,8 @@ export default function HomePage() {
                       border: isActive ? `1.5px solid ${craft.borderColor}` : '1px solid var(--border-subtle)',
                       boxShadow: isActive ? `0 12px 35px ${craft.bgGlow}` : 'none',
                     }}
+                    onMouseEnter={() => setActiveCraft(craft.id)}
+                    onFocus={() => setActiveCraft(craft.id)}
                     onClick={() => setActiveCraft(craft.id)}
                     role="button"
                     tabIndex={0}

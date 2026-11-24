@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const crafts = [
   {
@@ -96,7 +96,21 @@ const crafts = [
 ];
 
 export default function CraftsSection() {
-  const [activeId, setActiveId] = useState('sv-4'); // Branding active by default
+  const [activeId, setActiveId] = useState('sv-1'); // Web design active by default
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Auto-advance crafts when not hovering
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setActiveId((curr) => {
+        const idx = crafts.findIndex((c) => c.id === curr);
+        const next = (idx + 1) % crafts.length;
+        return crafts[next].id;
+      });
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isHovered]);
 
   return (
     <section className="sec sv alignfull" id="services" aria-labelledby="sv-3-title">
@@ -116,7 +130,11 @@ export default function CraftsSection() {
         </div>
 
         {/* 6 Accordion Panels */}
-        <div className="crafts-container">
+        <div 
+          className="crafts-container"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           {crafts.map((craft) => {
             const isActive = activeId === craft.id;
             const { theme } = craft;
@@ -131,6 +149,8 @@ export default function CraftsSection() {
                   border: isActive ? `1.5px solid ${theme.borderColor}` : '1px solid var(--border-subtle)',
                   boxShadow: isActive ? `0 12px 35px ${theme.bgGlow}` : 'none',
                 }}
+                onMouseEnter={() => setActiveId(craft.id)}
+                onFocus={() => setActiveId(craft.id)}
                 onClick={() => setActiveId(craft.id)}
                 role="button"
                 tabIndex={0}
