@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 function AnimatedStatNumber({ value, shouldAnimate, duration = 1800 }) {
   const numericTarget = parseInt(value, 10);
@@ -149,13 +149,8 @@ const workProjects = [
     name: 'Northwind Atelier',
     category: 'E-COMMERCE',
     tag: 'ecom',
-    metric: '+48% Rev',
-    image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
-    accent: '#ab5b4d',
-    bgHover: '#f9ece9',
-    borderHover: '#e8aba0',
-    textHover: '#14181f',
-    subHover: '#5c3e38',
+    metric: '+48%',
+    image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'p2',
@@ -166,11 +161,6 @@ const workProjects = [
     tag: 'brand',
     metric: '120k Packs',
     image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80',
-    accent: '#3d4e75',
-    bgHover: '#ebf0f9',
-    borderHover: '#a3b5de',
-    textHover: '#111722',
-    subHover: '#384357',
   },
   {
     id: 'p3',
@@ -181,26 +171,16 @@ const workProjects = [
     tag: 'web',
     metric: 'Awwwards',
     image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
-    accent: '#b5843a',
-    bgHover: '#fbf3e6',
-    borderHover: '#e8c992',
-    textHover: '#181510',
-    subHover: '#5c4826',
   },
   {
     id: 'p4',
-    coord: 'D1',
+    coord: '01',
     year: '2025',
     name: 'Mira Architects',
     category: 'WEB',
     tag: 'web',
-    metric: 'Monocle ID',
+    metric: '+64%',
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
-    accent: '#597764',
-    bgHover: '#edf4ef',
-    borderHover: '#abc2b2',
-    textHover: '#101712',
-    subHover: '#37473c',
   },
   {
     id: 'p5',
@@ -211,11 +191,6 @@ const workProjects = [
     tag: 'ecom',
     metric: '4.8% Conv',
     image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80',
-    accent: '#8c5873',
-    bgHover: '#f7edf2',
-    borderHover: '#dbabc2',
-    textHover: '#1c1117',
-    subHover: '#573847',
   },
   {
     id: 'p6',
@@ -226,11 +201,6 @@ const workProjects = [
     tag: 'brand',
     metric: 'Grammy Nom',
     image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
-    accent: '#a87232',
-    bgHover: '#f9f1e7',
-    borderHover: '#e3be8f',
-    textHover: '#1a140b',
-    subHover: '#574020',
   },
   {
     id: 'p7',
@@ -241,26 +211,16 @@ const workProjects = [
     tag: 'web',
     metric: "Red Dot '24",
     image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80',
-    accent: '#3b6875',
-    bgHover: '#e8f3f5',
-    borderHover: '#98c6d1',
-    textHover: '#0e1619',
-    subHover: '#2a444d',
   },
   {
     id: 'p8',
-    coord: 'D2',
+    coord: '02',
     year: '2024',
     name: 'Atlas Bikes',
     category: 'E-COMMERCE',
     tag: 'ecom',
     metric: '+84% Sales',
     image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=800&q=80',
-    accent: '#a64e3f',
-    bgHover: '#faebe8',
-    borderHover: '#e6a498',
-    textHover: '#1c110f',
-    subHover: '#592c23',
   },
 ];
 
@@ -347,7 +307,29 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, [isCraftHovered]);
   const [activeWorkFilter, setActiveWorkFilter] = useState('all');
-  const [hoveredWorkId, setHoveredWorkId] = useState('p5');
+  const [hoveredWorkId, setHoveredWorkId] = useState('p4'); // Mira Architects active as in user reference
+  const gridContainerRef = useRef(null);
+  const [crosshairPos, setCrosshairPos] = useState({ x: -1000, y: -1000, visible: false });
+  const [coordDisplay, setCoordDisplay] = useState({ xStr: '2222', yStr: '0268' });
+
+  const handleWorkMouseMove = useCallback((e) => {
+    if (!gridContainerRef.current) return;
+    const rect = gridContainerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+      setCrosshairPos({ x, y, visible: true });
+      const mappedX = Math.round(1000 + (x / rect.width) * 1500).toString().padStart(4, '0');
+      const mappedY = Math.round(100 + (y / rect.height) * 400).toString().padStart(4, '0');
+      setCoordDisplay({ xStr: mappedX, yStr: mappedY });
+    }
+  }, []);
+
+  const handleWorkMouseLeave = useCallback(() => {
+    setCrosshairPos((prev) => ({ ...prev, visible: false }));
+  }, []);
+
   const [budgetVal, setBudgetVal] = useState(18);
   const [selectedMonth, setSelectedMonth] = useState('November');
   const [email, setEmail] = useState('');
@@ -689,51 +671,95 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="work-arch-grid">
-              {filteredWork.map((proj) => {
-                const isHovered = hoveredWorkId === proj.id;
-                return (
-                  <div
-                    key={proj.id}
-                    className={`work-arch-card ${isHovered ? 'is-active' : ''}`}
-                    onMouseEnter={() => setHoveredIdSafe(setHoveredWorkId, proj.id)}
-                    onFocus={() => setHoveredIdSafe(setHoveredWorkId, proj.id)}
-                    tabIndex={0}
-                    style={{
-                      '--card-accent': proj.accent,
-                      '--card-bg-hover': proj.bgHover,
-                      '--card-border-hover': proj.borderHover,
-                      '--card-text-hover': proj.textHover,
-                      '--card-sub-hover': proj.subHover,
-                      '--card-badge-bg': proj.accent,
-                      '--card-badge-text': '#ffffff',
-                    }}
-                  >
-                    <div className="card-top-ticker">
-                      <div className="card-coord-group">
-                        <span className="card-color-dot" style={{ backgroundColor: proj.accent }} />
-                        <span className="card-coord">{proj.coord}</span>
-                      </div>
-                      <span className="card-year">{proj.year}</span>
-                    </div>
+            {/* Blueprint Framing Container with Top & Left Coordinate Rulers */}
+            <div className="work-blueprint-wrapper">
+              {/* Top Axis Coordinate Letters (A, B, C, D) */}
+              <div className="work-axis-top" aria-hidden="true">
+                <div className="work-axis-spacer" />
+                <div className="work-axis-cols">
+                  <span className="work-axis-col">A</span>
+                  <span className="work-axis-col">B</span>
+                  <span className="work-axis-col">C</span>
+                  <span className="work-axis-col">D</span>
+                </div>
+              </div>
 
-                    <div className="work-img-frame">
-                      <img src={proj.image} alt={proj.name} loading="lazy" className="work-img" />
-                      <div className="work-color-overlay" style={{ backgroundColor: proj.accent }} />
-                    </div>
+              <div className="work-grid-main-row">
+                {/* Left Axis Row Coordinates (1, 2) */}
+                <div className="work-axis-left" aria-hidden="true">
+                  <span className="work-axis-row work-axis-row-1">1</span>
+                  <span className="work-axis-row work-axis-row-2">2</span>
+                </div>
 
-                    <div className="card-meta-bar">
-                      <div className="card-meta-left">
-                        <h3 className="card-project-title">{proj.name}</h3>
-                        <span className="card-project-cat">{proj.category}</span>
-                      </div>
-                      <div className="card-meta-right">
-                        <span className="card-metric-pill">{proj.metric}</span>
+                {/* Interactive Grid with X-Y Crosshair Lines & Floating Coordinate Badge */}
+                <div
+                  className="work-arch-grid-container"
+                  ref={gridContainerRef}
+                  onMouseMove={handleWorkMouseMove}
+                  onMouseLeave={handleWorkMouseLeave}
+                >
+                  {/* Dynamic Crosshair Overlay */}
+                  {crosshairPos.visible && (
+                    <div className="work-crosshair-overlay" aria-hidden="true">
+                      {/* Full-width Horizontal Guideline */}
+                      <div
+                        className="crosshair-line-h"
+                        style={{ top: `${crosshairPos.y}px` }}
+                      />
+                      {/* Full-height Vertical Guideline */}
+                      <div
+                        className="crosshair-line-v"
+                        style={{ left: `${crosshairPos.x}px` }}
+                      />
+                      {/* Floating Architectural Coordinate Badge */}
+                      <div
+                        className="crosshair-coord-badge"
+                        style={{
+                          left: `${Math.min(crosshairPos.x + 14, 1320)}px`,
+                          top: `${Math.min(crosshairPos.y + 12, 600)}px`,
+                        }}
+                      >
+                        X {coordDisplay.xStr} · Y {coordDisplay.yStr}
                       </div>
                     </div>
+                  )}
+
+                  {/* The 2x4 Project Cards Grid */}
+                  <div className="work-arch-grid">
+                    {filteredWork.map((proj) => {
+                      const isHovered = hoveredWorkId === proj.id;
+                      return (
+                        <div
+                          key={proj.id}
+                          className={`work-arch-card ${isHovered ? 'is-active' : ''}`}
+                          onMouseEnter={() => setHoveredIdSafe(setHoveredWorkId, proj.id)}
+                          onFocus={() => setHoveredIdSafe(setHoveredWorkId, proj.id)}
+                          tabIndex={0}
+                        >
+                          <div className="card-top-ticker">
+                            <span className="card-coord">{proj.coord}</span>
+                            <span className="card-year">{proj.year}</span>
+                          </div>
+
+                          <div className="work-img-frame">
+                            <img src={proj.image} alt={proj.name} loading="lazy" className="work-img" />
+                          </div>
+
+                          <div className="card-meta-bar">
+                            <div className="card-meta-left">
+                              <h3 className="card-project-title">{proj.name}</h3>
+                              <span className="card-project-cat">{proj.category}</span>
+                            </div>
+                            <div className="card-meta-right">
+                              <span className="card-metric-pill">{proj.metric}</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
-                );
-              })}
+                </div>
+              </div>
             </div>
 
             <div className="work-grid-footer">
