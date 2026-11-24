@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import TimelineSection from '@/components/TimelineSection';
 
 function AnimatedStatNumber({ value, shouldAnimate, duration = 1800 }) {
   const numericTarget = parseInt(value, 10);
@@ -773,71 +774,9 @@ export default function HomePage() {
         </section>
 
         {/* =================================================================
-            5. SECTION: TWELVE WEEKS, NO SURPRISES (PROCESS ROADMAP)
+            5. SECTION: TWELVE WEEKS, NO SURPRISES (INTERACTIVE TIMELINE)
             ================================================================= */}
-        <section className="sec pc alignfull" id="timeline" aria-labelledby="pc-title-5">
-          <div className="container">
-            <div className="sh">
-              <h2 className="section-title" id="pc-title-5">
-                Twelve weeks, <span className="italic">no surprises.</span>
-              </h2>
-            </div>
-
-            <div className="timeline-card">
-              <div className="timeline-header" aria-hidden="true">
-                {Array.from({ length: 12 }, (_, i) => `W${i + 1}`).map((w) => (
-                  <span key={w} className="week-num">{w}</span>
-                ))}
-              </div>
-
-              <div className="timeline-tracks">
-                <div className="timeline-row">
-                  <div className="timeline-bar bar-sage" style={{ gridColumn: '1 / 4' }}>
-                    Discovery & Strategy
-                  </div>
-                </div>
-                <div className="timeline-row">
-                  <div className="timeline-bar bar-ochre" style={{ gridColumn: '3 / 7' }}>
-                    UX Architecture & Wireframes
-                  </div>
-                </div>
-                <div className="timeline-row">
-                  <div className="timeline-bar bar-coral" style={{ gridColumn: '6 / 10' }}>
-                    Visual System & UI Design
-                  </div>
-                </div>
-                <div className="timeline-row">
-                  <div className="timeline-bar bar-mauve" style={{ gridColumn: '9 / 12' }}>
-                    Engineering & QA Testing
-                  </div>
-                </div>
-              </div>
-
-              <div className="timeline-milestones">
-                <div className="milestone-item">
-                  <div className="milestone-dot" />
-                  <span>Kickoff Alignment</span>
-                </div>
-                <div className="milestone-item">
-                  <div className="milestone-dot" />
-                  <span>Wireframe Approval</span>
-                </div>
-                <div className="milestone-item">
-                  <div className="milestone-dot" />
-                  <span>Visual Signoff</span>
-                </div>
-                <div className="milestone-item">
-                  <div className="milestone-dot" />
-                  <span>Code Complete</span>
-                </div>
-                <div className="milestone-item">
-                  <div className="milestone-dot" />
-                  <span>Launch & Handover</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <TimelineSection />
 
         {/* =================================================================
             6. SECTION: PROMISES, IN WRITING (GUARANTEES)
