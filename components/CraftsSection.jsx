@@ -2,218 +2,178 @@
 
 import { useState, useEffect } from 'react';
 
-const crafts = [
+const craftsData = [
   {
     id: 'sv-1',
     num: '01',
     title: 'Web design',
-    tags: '01 — UX · UI · ART DIRECTION',
+    tag: '01 — UX · UI · ART DIRECTION',
     desc: 'Interfaces with a point of view — structure first, then the details nobody else notices.',
-    list: ['Research & UX', 'Art direction', 'UI design system', 'Prototypes'],
-    image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1000&q=80',
-    theme: {
-      accent: '#6e8677',
-      bgGlow: 'rgba(110, 134, 119, 0.28)',
-      borderColor: 'rgba(132, 160, 143, 0.5)',
-      tagBg: '#597764',
-    },
+    features: ['Research & UX', 'Art direction', 'UI design system', 'Prototypes'],
+    image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'sv-2',
     num: '02',
     title: 'Development',
-    tags: '02 — NEXT.JS · REACT · FRONTEND',
-    desc: 'Bespoke frontend architectures, headless CMS integrations, and lightning-fast animations.',
-    list: ['Next.js 15 App Router', 'React 19 Components', 'Tailwind & Motion', 'API Integrations'],
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1000&q=80',
-    theme: {
-      accent: '#426e7b',
-      bgGlow: 'rgba(66, 110, 123, 0.28)',
-      borderColor: 'rgba(89, 142, 158, 0.5)',
-      tagBg: '#3b6875',
-    },
+    tag: '02 — FRONT-END · CMS · APIS',
+    desc: 'Hand-written, fast, accessible code. WordPress, headless or fully custom.',
+    features: ['Front-end build', 'CMS setup', 'Integrations', 'Performance'],
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'sv-3',
     num: '03',
     title: 'E-commerce',
-    tags: '03 — SHOPIFY · CHECKOUT · CRO',
-    desc: 'Custom digital storefronts built to convert browsers into long-term patrons with zero friction.',
-    list: ['Shopify Plus Themes', 'Custom Cart Flow', 'Merchandising Systems', 'Speed Optimization'],
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1000&q=80',
-    theme: {
-      accent: '#b5843a',
-      bgGlow: 'rgba(181, 132, 58, 0.28)',
-      borderColor: 'rgba(214, 159, 75, 0.5)',
-      tagBg: '#9e6b2c',
-    },
+    tag: '03 — SHOPIFY · WOOCOMMERCE',
+    desc: 'Stores that feel like a brand, not a template — and convert like one.',
+    features: ['Store design', 'Checkout UX', 'Payments', 'Product data'],
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'sv-4',
     num: '04',
     title: 'Branding',
-    tags: '04 — IDENTITY · LOGO · PACKAGING',
-    desc: 'Distinctive typography, tactile print guidelines, and cohesive visual language for ambitious founders.',
-    list: ['Brand Identity & Logo', 'Typography Selection', 'Design Guidelines', 'Physical Packaging'],
-    image: 'https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=1000&q=80',
-    theme: {
-      accent: '#7e5267',
-      bgGlow: 'rgba(126, 82, 103, 0.28)',
-      borderColor: 'rgba(158, 106, 131, 0.5)',
-      tagBg: '#7a4b62',
-    },
+    tag: '04 — IDENTITY · TYPE · VOICE',
+    desc: 'Logos, type systems and tone that hold up from favicon to billboard.',
+    features: ['Logo & mark', 'Type system', 'Brand voice', 'Guidelines'],
+    image: 'https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'sv-5',
     num: '05',
     title: 'Motion',
-    tags: '05 — 3D · KINETIC TYPE · INTERACTION',
-    desc: 'Subtle choreography and cinematic visual momentum that elevate screens into memorable encounters.',
-    list: ['3D Asset Modeling', 'Micro-Interactions', 'Kinetic Typography', 'Video Showreels'],
-    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1000&q=80',
-    theme: {
-      accent: '#ab5b4d',
-      bgGlow: 'rgba(171, 91, 77, 0.28)',
-      borderColor: 'rgba(204, 115, 99, 0.5)',
-      tagBg: '#9e5346',
-    },
+    tag: '05 — INTERACTION · 3D · VIDEO',
+    desc: 'Movement with purpose: transitions, micro-interactions and product films.',
+    features: ['Micro-interactions', 'Page transitions', '3D scenes', 'Product film'],
+    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 'sv-6',
     num: '06',
     title: 'Support',
-    tags: '06 — RETAINER · ITERATION · CARE',
-    desc: 'Post-launch technical guardianship, monthly feature drops, and continuous performance tuning.',
-    list: ['Monthly Dev Retainer', 'Conversion Audits', 'Core Web Vitals', 'Priority Support'],
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80',
-    theme: {
-      accent: '#2c395c',
-      bgGlow: 'rgba(44, 57, 92, 0.35)',
-      borderColor: 'rgba(72, 92, 145, 0.5)',
-      tagBg: '#34466b',
-    },
+    tag: '06 — HOSTING · SEO · GROWTH',
+    desc: 'We stay after launch — updates, performance and steady improvement.',
+    features: ['Hosting', 'Updates', 'SEO', 'Monthly reports'],
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
   },
 ];
 
 export default function CraftsSection() {
-  const [activeId, setActiveId] = useState('sv-1'); // Web design active by default
-  const [isHovered, setIsHovered] = useState(false);
+  const [activeCraft, setActiveCraft] = useState('sv-1');
+  const [isCraftHovered, setIsCraftHovered] = useState(false);
 
   // Auto-advance crafts when not hovering
   useEffect(() => {
-    if (isHovered) return;
+    if (isCraftHovered) return;
     const interval = setInterval(() => {
-      setActiveId((curr) => {
-        const idx = crafts.findIndex((c) => c.id === curr);
-        const next = (idx + 1) % crafts.length;
-        return crafts[next].id;
+      setActiveCraft((curr) => {
+        const idx = craftsData.findIndex((c) => c.id === curr);
+        const next = (idx + 1) % craftsData.length;
+        return craftsData[next].id;
       });
     }, 4500);
     return () => clearInterval(interval);
-  }, [isHovered]);
+  }, [isCraftHovered]);
 
   return (
     <section className="sec sv alignfull" id="services" aria-labelledby="sv-3-title">
       <div className="container">
         <div className="sv__head">
-          <h2 className="section-title" id="sv-3-title">
+          <h2 className="nm-exact-title" id="sv-3-title">
             Six crafts. <span className="italic">One studio.</span>
           </h2>
           <div className="craft-counter-lbl">
             <span>
               <span className="craft-counter-active">
-                {crafts.find((c) => c.id === activeId)?.num || '01'}
+                {craftsData.find((c) => c.id === activeCraft)?.num || '01'}
               </span>{' '}
-              / 06 · <span style={{ color: 'var(--accent-gold)' }}>AUTOPLAY</span>
+              / 06 · <span style={{ color: 'var(--text-muted)' }}>{isCraftHovered ? 'PAUSED' : 'AUTOPLAY'}</span>
             </span>
           </div>
         </div>
 
-        {/* 6 Accordion Panels */}
+        {/* Accordion Stage Box (1:1 Split 2-Column Active & Sleek Vertical Strips) */}
         <div 
-          className="crafts-container"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          className="crafts-stage-box"
+          onMouseEnter={() => setIsCraftHovered(true)}
+          onMouseLeave={() => setIsCraftHovered(false)}
         >
-          {crafts.map((craft) => {
-            const isActive = activeId === craft.id;
-            const { theme } = craft;
+          {craftsData.map((craft) => {
+            const isActive = activeCraft === craft.id;
 
-            return (
-              <div
-                key={craft.id}
-                className={`craft-pane ${isActive ? 'active' : ''}`}
-                style={{
-                  backgroundImage: `url(${craft.image})`,
-                  backgroundColor: theme.accent,
-                  border: isActive ? `1.5px solid ${theme.borderColor}` : '1px solid var(--border-subtle)',
-                  boxShadow: isActive ? `0 12px 35px ${theme.bgGlow}` : 'none',
-                }}
-                onMouseEnter={() => setActiveId(craft.id)}
-                onFocus={() => setActiveId(craft.id)}
-                onClick={() => setActiveId(craft.id)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') setActiveId(craft.id);
-                }}
-              >
-                {/* Collapsed Vertical Title */}
-                <span 
-                  className="craft-vertical-label"
-                  style={{
-                    color: isActive ? '#fff' : 'var(--text-secondary)',
-                  }}
+            if (isActive) {
+              return (
+                <div
+                  key={craft.id}
+                  className="craft-stage-pane craft-stage-pane--active"
                 >
-                  <span style={{ color: theme.accent, marginRight: '0.4rem', fontWeight: 600 }}>{craft.num}</span>
-                  {craft.title}
-                </span>
+                  {/* Left Side: Information Pane */}
+                  <div className="craft-info-pane">
+                    <div className="craft-info-top">
+                      <span className="craft-tag-eyebrow">{craft.tag}</span>
+                      <span className="craft-watermark-num">{craft.num}</span>
 
-                {/* Expanded Content with Colorful Accents */}
-                <div className="craft-content">
-                  <span 
-                    className="craft-category"
-                    style={{ color: theme.accent, borderBottom: `1px solid ${theme.accent}` }}
-                  >
-                    {craft.tags}
-                  </span>
-                  
-                  <h3 className="craft-title">{craft.title}</h3>
-                  <p className="craft-desc">{craft.desc}</p>
-                  
-                  <div className="craft-tags">
-                    {craft.list.map((item) => (
-                      <span 
-                        key={item} 
-                        className="craft-tag"
-                        style={{
-                          backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                          borderColor: theme.borderColor,
-                          color: '#f5f2eb',
-                        }}
-                      >
-                        {item}
-                      </span>
-                    ))}
+                      <div className="craft-hero-text">
+                        <h3 className="craft-hero-title">{craft.title}</h3>
+                        <p className="craft-hero-desc">{craft.desc}</p>
+                      </div>
+                    </div>
+
+                    {/* 2-Column Features Table with Divider Lines */}
+                    <div className="craft-features-table">
+                      <div className="craft-features-row">
+                        <span className="craft-feat-item">— {craft.features[0]}</span>
+                        <span className="craft-feat-item">— {craft.features[1]}</span>
+                      </div>
+                      <div className="craft-features-divider" />
+                      <div className="craft-features-row">
+                        <span className="craft-feat-item">— {craft.features[2]}</span>
+                        <span className="craft-feat-item">— {craft.features[3]}</span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div style={{ marginTop: '1.25rem' }}>
-                    <a 
-                      href="#contact" 
-                      className="craft-explore-btn"
-                      style={{ 
-                        color: '#fff',
-                        borderColor: theme.borderColor,
-                        backgroundColor: theme.tagBg,
-                      }}
-                    >
+                  {/* Right Side: Editorial Photography Pane with Crisp White Button */}
+                  <div 
+                    className="craft-image-pane"
+                    style={{ backgroundImage: `url(${craft.image})` }}
+                  >
+                    <div className="craft-image-overlay" />
+                    <a href="#contact" className="craft-explore-action-btn">
                       Explore {craft.title} →
                     </a>
                   </div>
                 </div>
+              );
+            }
+
+            {/* Collapsed Vertical Card Strip */}
+            return (
+              <div
+                key={craft.id}
+                className="craft-stage-pane craft-stage-pane--collapsed"
+                onMouseEnter={() => setActiveCraft(craft.id)}
+                onClick={() => setActiveCraft(craft.id)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') setActiveCraft(craft.id);
+                }}
+              >
+                <span className="strip-number">{craft.num}</span>
+                <span className="strip-title-vertical">{craft.title}</span>
+                <div className="strip-plus-btn">+</div>
               </div>
             );
           })}
+
+          {/* Bottom Right Corner Up Arrow Button */}
+          <a href="#services" className="crafts-corner-scroll-btn" aria-label="Top of crafts">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 19V5M5 12l7-7 7 7"/>
+            </svg>
+          </a>
         </div>
       </div>
     </section>
