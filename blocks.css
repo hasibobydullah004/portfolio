@@ -1,0 +1,1691 @@
+/*
+ * Graphite — the design on WordPress blocks: where block markup differs from the HTML template,
+ * these rules give it the same look (design.css stays as the template has it).
+ */
+
+/* 01. Page frame: block gaps off, the design spaces everything itself */
+.wp-site-blocks > * + *,
+.wp-block-template-part,
+.gr-main .wp-block-post-content > * {
+  margin-block: 0;
+}
+
+.gr-main .wp-block-post-content > section:last-child {
+  padding-bottom: 0;
+}
+
+/* 02. Header photo and light-scheme fog (the HTML draws them with two empty divs); Home 2 adds
+   its hairline guides to the fog layer */
+.hd--studio::before,
+.hd--bp::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--h-photo) center top / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 92%, transparent 100%);
+  pointer-events: none;
+}
+
+.hd--studio::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(440 * var(--u));
+  background: linear-gradient(180deg, rgba(246, 246, 244, .94) 0%, rgba(246, 246, 244, .75) 30%, rgba(246, 246, 244, .3) 65%, rgba(246, 246, 244, 0) 100%);
+  opacity: var(--h-fog);
+  transition: opacity .4s;
+  pointer-events: none;
+}
+
+.hd--bp::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--h-guide), var(--h-guide)) 0 calc(235 * var(--u)) / 100% calc(1.5 * var(--u)) no-repeat,
+    linear-gradient(var(--h-guide), var(--h-guide)) 0 calc(795 * var(--u)) / 100% calc(1.5 * var(--u)) no-repeat,
+    linear-gradient(var(--h-guide), var(--h-guide)) calc(50% - calc(608 * var(--u))) 0 / calc(1.5 * var(--u)) 100% no-repeat,
+    linear-gradient(var(--h-guide), var(--h-guide)) calc(50% + calc(608 * var(--u))) 0 / calc(1.5 * var(--u)) 100% no-repeat,
+    linear-gradient(180deg, rgba(246, 246, 244, calc(.94 * var(--h-fog))) 0%, rgba(246, 246, 244, calc(.75 * var(--h-fog))) 30%, rgba(246, 246, 244, calc(.3 * var(--h-fog))) 65%, rgba(246, 246, 244, 0) 100%) 0 0 / 100% calc(440 * var(--u)) no-repeat;
+}
+
+@media (max-width: 1199.98px) {
+  .hd--bp::after {
+    background: linear-gradient(180deg, rgba(246, 246, 244, calc(.94 * var(--h-fog))) 0%, rgba(246, 246, 244, calc(.75 * var(--h-fog))) 30%, rgba(246, 246, 244, calc(.3 * var(--h-fog))) 65%, rgba(246, 246, 244, 0) 100%) 0 0 / 100% calc(440 * var(--u)) no-repeat;
+  }
+}
+
+/* Home 2 title: the second line follows the colour scheme (two headings, one shown) */
+.hd__bp > .hd__title em {
+  display: block;
+  letter-spacing: -.02em;
+}
+
+[data-theme="light"] .hd__bp > .hd__title.hd__light {
+  display: block;
+}
+
+.hd__bp > .hd__cta {
+  gap: calc(19 * var(--u));
+  flex-wrap: nowrap;
+}
+
+.hd__bp > .hd__corner {
+  margin: 0;
+}
+
+.hd__ghost > .wp-block-button__link {
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  line-height: normal;
+}
+
+/* 03. Top bar: Site Logo (text fallback in the boxed word mark) */
+.nv {
+  display: flex;
+}
+
+.nv__logo.graphite-logo-text {
+  text-transform: uppercase;
+  line-height: normal;
+}
+
+.nv__logo:not(.graphite-logo-text) {
+  padding: 0;
+  border: 0;
+}
+
+.nv__right > .wp-block-navigation {
+  gap: calc(61 * var(--u));
+}
+
+/* 04. Main menu (core Navigation) in the design's look */
+.nv__nav .wp-block-navigation__container {
+  gap: calc(61 * var(--u));
+}
+
+.nv__nav .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  color: var(--h-nav);
+  font-size: max(12px, calc(21 * var(--u)));
+  font-weight: 600;
+  letter-spacing: .12em;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.nv__nav .wp-block-navigation__container > .current-menu-item > .wp-block-navigation-item__content,
+.nv__nav .wp-block-navigation__container > .current-menu-ancestor > .wp-block-navigation-item__content {
+  padding-bottom: calc(4 * var(--u));
+  border-bottom: calc(2 * var(--u)) solid var(--h-fg);
+  color: var(--h-fg);
+}
+
+/* a dropdown label: the caret of the design instead of the chevron icon */
+.nv__nav .wp-block-navigation__container > .has-child {
+  gap: calc(13 * var(--u));
+  padding: calc(19 * var(--u)) 0;
+  margin: calc(-19 * var(--u)) 0;
+}
+
+.nv__nav .has-child > .wp-block-navigation__submenu-icon {
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: var(--h-nav);
+  /* the line box of the label beside it, so the caret sits on the same middle */
+  font-size: max(12px, calc(21 * var(--u)));
+  font-weight: 600;
+  letter-spacing: .12em;
+  line-height: normal;
+  transition: transform .2s;
+}
+
+.nv__nav .has-child > .wp-block-navigation__submenu-icon svg {
+  display: none;
+}
+
+.nv__nav .has-child > .wp-block-navigation__submenu-icon::before {
+  content: "▼" / "";
+  display: inline-block;
+  font-size: max(8px, calc(13 * var(--u)));
+}
+
+/* the current section's label is underlined (taller): the caret stays on the label's middle */
+.nv__nav .current-menu-ancestor > .wp-block-navigation__submenu-icon,
+.nv__nav .current-menu-item > .wp-block-navigation__submenu-icon {
+  margin-bottom: calc(6 * var(--u));
+}
+
+.nv__nav .has-child:hover > .wp-block-navigation__submenu-icon,
+.nv__nav .has-child > .wp-block-navigation__submenu-icon[aria-expanded="true"] {
+  transform: rotate(180deg);
+}
+
+.nv__nav .has-child:hover > .wp-block-navigation-item__content {
+  color: var(--h-fg);
+}
+
+/* the panel: 380 wide, notch over the label, numbered rows */
+/* closed panels are out of the page, as in the design (display, not just visibility: a hidden panel
+   with a backdrop blur still costs a compositing layer) */
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .has-child > .wp-block-navigation__submenu-container {
+  display: none;
+  top: 100%;
+  right: auto;
+  left: calc(-25 * var(--u));
+  z-index: 30;
+  width: calc(380 * var(--u));
+  min-width: 0;
+  margin-top: calc(22 * var(--u));
+  padding: 0;
+  counter-reset: gr-row;
+  background: var(--dd-bg);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--dd-bd);
+  box-shadow: 0 calc(40 * var(--u)) calc(100 * var(--u)) rgba(0, 0, 0, .6);
+  color: var(--h-fg);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+@media (min-width: 1200px) {
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .has-child:hover > .wp-block-navigation__submenu-container,
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .has-child:focus-within > .wp-block-navigation__submenu-container,
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .has-child > .wp-block-navigation__submenu-icon[aria-expanded="true"] ~ .wp-block-navigation__submenu-container {
+  display: block;
+  width: calc(380 * var(--u));
+  min-width: 0;
+  height: auto;
+  overflow: visible;
+  visibility: visible;
+  opacity: 1;
+}
+}
+
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .has-child > .wp-block-navigation__submenu-container::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  height: calc(23 * var(--u));
+}
+
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .has-child > .wp-block-navigation__submenu-container::after {
+  content: "";
+  position: absolute;
+  top: calc(-12 * var(--u));
+  left: calc(25 * var(--u));
+  border-right: calc(9 * var(--u)) solid transparent;
+  border-bottom: calc(12 * var(--u)) solid var(--dd-bd);
+  border-left: calc(9 * var(--u)) solid transparent;
+}
+
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container > .wp-block-navigation-item {
+  display: block;
+  counter-increment: gr-row;
+}
+
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+  display: grid;
+  grid-template-columns: calc(48 * var(--u)) 1fr auto;
+  align-items: baseline;
+  gap: calc(6 * var(--u));
+  width: auto;
+  padding: calc(18 * var(--u)) calc(25 * var(--u));
+  border-bottom: 1px solid var(--dd-rule);
+  color: var(--dd-fg);
+  transition: background .2s, color .2s;
+}
+
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container .wp-block-navigation-item__content::before {
+  content: counter(gr-row, decimal-leading-zero);
+  color: var(--dd-num);
+  font-family: var(--serif);
+  font-size: calc(31 * var(--u));
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1;
+  transition: color .2s;
+}
+
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container .wp-block-navigation-item__content::after {
+  content: "↗" / "";
+  display: inline-block;
+  font-size: max(13px, calc(20 * var(--u)));
+  transition: transform .25s;
+}
+
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container .wp-block-navigation-item__label {
+  display: flex;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  font-size: max(15px, calc(24 * var(--u)));
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+/* NOW keeps its place on every row and shows only on the current page */
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container .wp-block-navigation-item__label::after {
+  content: "NOW" / "";
+  padding: calc(3 * var(--u)) calc(6 * var(--u));
+  border: 1px solid var(--dd-ring);
+  font-family: var(--mono);
+  font-size: max(9px, calc(10 * var(--u)));
+  font-weight: 500;
+  letter-spacing: .12em;
+  opacity: 0;
+  transition: border-color .2s;
+}
+
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container [aria-current] .wp-block-navigation-item__label::after {
+  opacity: 1;
+}
+
+/* the hovered row inverts; with nothing hovered the current page's row is lit (or the first row) */
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container:not(:hover):not(:has([aria-current])) > li:first-child > a,
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container:not(:hover) > li > a[aria-current],
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container .wp-block-navigation-item__content:hover,
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container .wp-block-navigation-item__content:focus-visible {
+  background: var(--dd-on-bg);
+  color: var(--dd-on-fg);
+  opacity: 1;
+}
+
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container:not(:hover):not(:has([aria-current])) > li:first-child > a::before,
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container:not(:hover) > li > a[aria-current]::before,
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container .wp-block-navigation-item__content:hover::before,
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container .wp-block-navigation-item__content:focus-visible::before {
+  color: var(--dd-on-fg);
+}
+
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container:not(:hover):not(:has([aria-current])) > li:first-child > a .wp-block-navigation-item__label::after,
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container:not(:hover) > li > a[aria-current] .wp-block-navigation-item__label::after,
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container .wp-block-navigation-item__content:hover .wp-block-navigation-item__label::after {
+  border-color: var(--dd-on-fg);
+}
+
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container:not(:hover):not(:has([aria-current])) > li:first-child > a::after,
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container:not(:hover) > li > a[aria-current]::after,
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container .wp-block-navigation-item__content:hover::after,
+.wp-site-blocks .nv .nv__nav .wp-block-navigation__container .wp-block-navigation__submenu-container .wp-block-navigation-item__content:focus-visible::after {
+  transform: rotate(45deg);
+}
+
+/* 05. Colour scheme switch and account link: round icon buttons, words kept for screen readers */
+.nv__tools > .wp-block-buttons {
+  gap: 0;
+}
+
+.nv__theme > .wp-block-button__link {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: max(30px, calc(42 * var(--u)));
+  height: max(30px, calc(42 * var(--u)));
+  padding: 0;
+  overflow: hidden;
+  border: calc(1.5 * var(--u)) solid var(--h-tg-bd);
+  border-radius: 50%;
+  background: var(--h-tg-bg);
+  color: var(--h-tg-fg);
+  font-size: 0;
+  line-height: 1;
+  transition: background .2s, color .2s;
+}
+
+.nv__theme > .wp-block-button__link::before {
+  content: "☀" / "";
+  font-size: max(13px, calc(19 * var(--u)));
+  font-weight: 400;
+}
+
+[data-theme="light"] .nv__theme > .wp-block-button__link::before {
+  content: "☾" / "";
+}
+
+
+.nv__theme > .wp-block-button__link:hover {
+  background: var(--h-tg-hbg);
+  color: var(--h-tg-hfg);
+  opacity: 1;
+}
+
+/* 06. Hero: the title box of the design from core blocks */
+.hd__meta > p,
+.hd__row > .wp-block-buttons {
+  margin: 0;
+}
+
+.hd__row > .wp-block-buttons {
+  gap: 0;
+}
+
+.hd__btn > .wp-block-button__link {
+  display: inline-block;
+  border-radius: 0;
+  line-height: normal;
+}
+
+.gr-prose {
+  padding-inline: max(20px, var(--gut));
+  line-height: 1.6;
+}
+
+/* plain content (the default page template, a note's copy, comments): the design's reset takes
+   list markers, link underlines and block spacing away, which designed sections want and ordinary
+   text does not. Every list and link of that text is styled, whatever class an author gives it;
+   only the design's own pieces (the facts grid of a note, menus, buttons, Graphite Core blocks and
+   design sections placed into the text) keep the design's look. */
+.gr-prose > .gr-title + *,
+.gr-prose > .gr-cover + * {
+  margin-block-start: .8em;
+}
+
+.gr-prose .wp-block-post-content > * + * {
+  margin-block-start: 1.25em;
+}
+
+.gr-prose .wp-block-post-content > :is(h1, h2, h3, h4, h5, h6) {
+  margin-block-start: 1.8em;
+}
+
+.gr-prose .wp-block-post-content > :is(h1, h2, h3, h4, h5, h6) + * {
+  margin-block-start: .6em;
+}
+
+.gr-prose .wp-block-post-content > :first-child {
+  margin-block-start: 0;
+}
+
+:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is(.wp-block-group, .wp-block-column, blockquote:not(.bp__quote):not(:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is([class*="wp-block-graphite-"], .sec, nav, .wp-block-buttons) *), details) > * + * {
+  margin-block-start: 1em;
+}
+
+:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is(ul, ol):not(.bp__facts, .wp-block-navigation__container, .wp-block-navigation__submenu-container, .wp-block-social-links, .wp-block-post-template, .wp-block-comment-template):not(:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is([class*="wp-block-graphite-"], .sec, nav, .wp-block-buttons) *) {
+  padding-inline-start: 1.4em;
+}
+
+:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) ul:not(.bp__facts, .wp-block-navigation__container, .wp-block-navigation__submenu-container, .wp-block-social-links, .wp-block-post-template, .wp-block-comment-template):not(:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is([class*="wp-block-graphite-"], .sec, nav, .wp-block-buttons) *) {
+  list-style: disc;
+}
+
+:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) li > ul:not(.bp__facts, .wp-block-navigation__container, .wp-block-navigation__submenu-container, .wp-block-social-links, .wp-block-post-template, .wp-block-comment-template):not(:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is([class*="wp-block-graphite-"], .sec, nav, .wp-block-buttons) *) {
+  list-style: circle;
+}
+
+:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) li li > ul:not(.bp__facts, .wp-block-navigation__container, .wp-block-navigation__submenu-container, .wp-block-social-links, .wp-block-post-template, .wp-block-comment-template):not(:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is([class*="wp-block-graphite-"], .sec, nav, .wp-block-buttons) *) {
+  list-style: square;
+}
+
+:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) ol:not(.bp__facts, .wp-block-navigation__container, .wp-block-navigation__submenu-container, .wp-block-social-links, .wp-block-post-template, .wp-block-comment-template):not(:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is([class*="wp-block-graphite-"], .sec, nav, .wp-block-buttons) *) {
+  list-style: decimal;
+}
+
+:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) li > ol:not(.bp__facts, .wp-block-navigation__container, .wp-block-navigation__submenu-container, .wp-block-social-links, .wp-block-post-template, .wp-block-comment-template):not(:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is([class*="wp-block-graphite-"], .sec, nav, .wp-block-buttons) *) {
+  list-style: lower-alpha;
+}
+
+:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is(ul, ol):not(.bp__facts, .wp-block-navigation__container, .wp-block-navigation__submenu-container, .wp-block-social-links, .wp-block-post-template, .wp-block-comment-template):not(:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is([class*="wp-block-graphite-"], .sec, nav, .wp-block-buttons) *) > li + li,
+:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) li > :is(ul, ol):not(.bp__facts, .wp-block-navigation__container, .wp-block-navigation__submenu-container, .wp-block-social-links, .wp-block-post-template, .wp-block-comment-template):not(:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is([class*="wp-block-graphite-"], .sec, nav, .wp-block-buttons) *) {
+  margin-block-start: .35em;
+}
+
+/* every link in running text is underlined, whatever class an author or a plugin gives it; only
+   buttons and links inside the design's own blocks and menus are left as the design draws them */
+:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) a:not(.wp-block-button__link, .wp-element-button, .wp-block-file__button):not(:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is([class*="wp-block-graphite-"], .sec, nav, .wp-block-buttons) *) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .18em;
+}
+
+:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) a:not(.wp-block-button__link, .wp-element-button, .wp-block-file__button):not(:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is([class*="wp-block-graphite-"], .sec, nav, .wp-block-buttons) *):is(:hover, :focus-visible) {
+  opacity: 1;
+  text-decoration-thickness: 2px;
+}
+
+:is(.gr-prose .wp-block-post-content, .bp__copy) blockquote:not(.bp__quote):not(:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) :is([class*="wp-block-graphite-"], .sec, nav, .wp-block-buttons) *) {
+  padding-inline-start: 1em;
+  border-inline-start: 2px solid var(--fg);
+}
+
+:is(.gr-prose .wp-block-post-content, .bp__copy, .bc__t) pre {
+  overflow-x: auto;
+  padding: 1em;
+  border: 1px solid var(--line2);
+  white-space: pre;
+}
+
+/* long unbroken words and addresses wrap instead of pushing the page sideways */
+.wp-site-blocks {
+  overflow-wrap: break-word;
+}
+
+/* 07. Footer: link columns (core Navigation, Social Icons) as the design's plain lists */
+.ft__main > .wp-block-heading {
+  margin: 0;
+}
+
+.ft__col > .wp-block-heading,
+.ft__studio > .wp-block-heading {
+  margin: 0 0 calc(16 * var(--u));
+}
+
+.ft__col .wp-block-navigation__container,
+.ft__col .wp-block-social-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(10 * var(--u));
+  margin: 0;
+  padding: 0;
+}
+
+.ft__col .wp-block-navigation-item__content {
+  padding: 0;
+}
+
+.ft__col .wp-block-social-links .wp-social-link {
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+.ft__col .wp-block-social-links .wp-block-social-link-anchor {
+  padding: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.ft__col .wp-block-social-links .wp-block-social-link-anchor svg {
+  display: none;
+}
+
+.ft__col .wp-block-social-links,
+.ft__col .wp-block-social-links.has-visible-labels .wp-social-link .wp-block-social-link-label {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.ft__col .wp-block-social-links .wp-block-social-link-label::after {
+  content: " ↗" / "";
+}
+
+.ft__col .wp-block-social-links .wp-social-link:hover {
+  transform: none;
+  opacity: .85;
+}
+
+.ft__studio > p {
+  margin: 0;
+}
+
+.ft__studio > .ft__mail a {
+  color: inherit;
+}
+
+/* the whole tile is the link, as in the design */
+.ft__start {
+  position: relative;
+}
+
+.ft__start > p {
+  margin: 0;
+}
+
+.ft__go a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.ft__bar > p {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* the newsletter's hidden field for bots stays out of sight and out of the way */
+.ft__trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* 08. Below 1200px: the menu is the design's full-screen sheet (core Navigation overlay) */
+.nv__nav .nv__mcontact {
+  display: none;
+}
+
+@media (max-width: 1199.98px) {
+  .nv__right > .wp-block-navigation {
+    order: 3;
+  }
+
+  .nv__cta {
+    display: none;
+  }
+
+  /* the burger: two lines, 44px square, at the right end of the bar */
+  .nv .nv__nav .wp-block-navigation__responsive-container-open {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: var(--h-fg);
+  }
+
+  .nv .nv__nav .wp-block-navigation__responsive-container-open svg,
+  .nv .nv__nav .wp-block-navigation__responsive-container-close svg {
+    display: none;
+  }
+
+  .nv .nv__nav .wp-block-navigation__responsive-container-open::before,
+  .nv .nv__nav .wp-block-navigation__responsive-container-open::after,
+  .nv .nv__nav .wp-block-navigation__responsive-container-close::before,
+  .nv .nv__nav .wp-block-navigation__responsive-container-close::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background: currentColor;
+  }
+
+  .nv .nv__nav .wp-block-navigation__responsive-container-open::before {
+    top: 17px;
+  }
+
+  .nv .nv__nav .wp-block-navigation__responsive-container-open::after {
+    top: 25px;
+  }
+
+  .nv .nv__nav .wp-block-navigation__responsive-container-close::before {
+    top: 21px;
+    transform: rotate(45deg);
+  }
+
+  .nv .nv__nav .wp-block-navigation__responsive-container-close::after {
+    top: 21px;
+    transform: rotate(-45deg);
+  }
+
+  .nv .nv__nav .wp-block-navigation__responsive-container:not(.is-menu-open) {
+    display: none;
+  }
+
+  /* the open sheet: under the bar's logo and tools, over the page */
+  .wp-site-blocks .nv .nv__nav:not(.has-background) .wp-block-navigation__responsive-container.is-menu-open {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    padding: 110px var(--gut) 40px;
+    overflow-y: auto;
+    background: var(--dd-bg);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    color: var(--h-fg);
+    animation: none;
+  }
+
+  .nv .nv__nav .is-menu-open .wp-block-navigation__responsive-close,
+  .nv .nv__nav .is-menu-open .wp-block-navigation__responsive-dialog {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nv .nv__nav .is-menu-open .wp-block-navigation__responsive-container-close {
+    position: fixed;
+    top: 22px;
+    right: var(--gut);
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: var(--h-fg);
+  }
+
+  .wp-site-blocks .nv .nv__nav .is-menu-open .wp-block-navigation__responsive-container-content {
+    display: block;
+    padding: 0;
+    text-align: left;
+  }
+
+  .wp-site-blocks .nv .nv__nav .is-menu-open .wp-block-navigation__container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .wp-site-blocks .nv .nv__nav .is-menu-open .wp-block-navigation__container > .wp-block-navigation-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--dd-rule);
+  }
+
+  .wp-site-blocks .nv .nv__nav .is-menu-open .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content {
+    flex: 1;
+    padding: 18px 0;
+    border: 0;
+    color: var(--h-fg);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  .nv .nv__nav .is-menu-open .nv__mcontact {
+    display: flex;
+  }
+
+  /* a dropdown opens in the sheet with its caret (the label stays a link) */
+  .wp-site-blocks .nv .nv__nav .is-menu-open .has-child > .wp-block-navigation__submenu-icon {
+    display: flex;
+    transform: none;
+    justify-content: flex-end;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    font-size: 22px;
+    color: var(--h-fg);
+  }
+
+  .wp-site-blocks .nv .nv__nav .is-menu-open .has-child.gr-open > .wp-block-navigation__submenu-icon {
+    transform: rotate(180deg);
+    justify-content: flex-start;
+  }
+
+  .wp-site-blocks .nv .nv__nav .is-menu-open .has-child > .wp-block-navigation__submenu-icon::before {
+    font-size: 11px;
+  }
+
+  .wp-site-blocks .nv .nv__nav .wp-block-navigation__container .is-menu-open .has-child > .wp-block-navigation__submenu-container,
+  .wp-site-blocks .nv .nv__nav .is-menu-open .wp-block-navigation__container .has-child > .wp-block-navigation__submenu-container {
+    position: static;
+    display: none;
+    width: 100%;
+    height: auto;
+    margin: 0 0 18px;
+    padding: 0;
+    overflow: visible;
+    visibility: visible;
+    opacity: 1;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .wp-site-blocks .nv .nv__nav .is-menu-open .wp-block-navigation__container .has-child.gr-open > .wp-block-navigation__submenu-container {
+    display: block;
+  }
+
+  .wp-site-blocks .nv .nv__nav .is-menu-open .wp-block-navigation__submenu-container::before,
+  .wp-site-blocks .nv .nv__nav .is-menu-open .wp-block-navigation__submenu-container::after {
+    display: none;
+  }
+
+  .wp-site-blocks .nv .nv__nav .is-menu-open .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+    grid-template-columns: 48px 1fr auto;
+    padding: 14px 12px;
+    border: 1px solid var(--dd-rule);
+    border-bottom: 0;
+  }
+
+  .wp-site-blocks .nv .nv__nav .is-menu-open .wp-block-navigation__submenu-container > li:last-child > .wp-block-navigation-item__content {
+    border-bottom: 1px solid var(--dd-rule);
+  }
+
+  .wp-site-blocks .nv .nv__nav .is-menu-open .wp-block-navigation__submenu-container .wp-block-navigation-item__content::before {
+    font-size: 32px;
+  }
+
+  html.has-modal-open {
+    overflow: hidden;
+  }
+
+  /* the open sheet has its own close button where the burger was */
+  .nv .nv__nav:has(.is-menu-open) .wp-block-navigation__responsive-container-open {
+    visibility: hidden;
+  }
+}
+
+/* 09. Positions that follow the blocks' own data (the HTML writes them as generated rules) */
+@media (min-width: 1200px) {
+  .wp-block-graphite-process-loop .lp__node {
+    left: var(--x);
+    top: calc(var(--y) * var(--u));
+  }
+}
+
+/* 10. Inner header: the top line of core blocks */
+.tb p {
+  margin: 0;
+}
+
+.tb__live::before {
+  content: "";
+  display: block;
+  width: max(5px, calc(8 * var(--u)));
+  height: max(5px, calc(8 * var(--u)));
+  border-radius: 50%;
+  background: var(--h-fg);
+  animation: tb-pulse 1.8s ease-in-out infinite;
+}
+
+/* the hairline separators of the design before the social links and the account link */
+.tb__r > .tb__social,
+.tb__r > .tb__auth {
+  padding-left: calc(40 * var(--u) + 1px);
+  background: linear-gradient(var(--h-sep), var(--h-sep)) 0 50% / 1px calc(20 * var(--u)) no-repeat;
+}
+
+.tb .wp-block-social-links.tb__social {
+  gap: calc(24 * var(--u));
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.tb .tb__social .wp-social-link {
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+.tb .tb__social .wp-block-social-link-anchor {
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.tb .tb__social .wp-block-social-link-anchor svg {
+  display: none;
+}
+
+.tb .tb__social .wp-social-link:hover {
+  transform: none;
+}
+
+.tb .tb__social .wp-social-link-instagram a::before {
+  content: "IG";
+}
+
+.tb .tb__social .wp-social-link-behance a::before {
+  content: "BE";
+}
+
+.tb .tb__social .wp-social-link-dribbble a::before {
+  content: "DR";
+}
+
+.tb .tb__social .wp-social-link-linkedin a::before {
+  content: "IN";
+}
+
+.tb__r > .tb__auth {
+  display: flex;
+  align-items: center;
+}
+
+/* one chip alone keeps both outer margins of the design's pair */
+.tb__auth .tb__chip:only-child {
+  margin: 0 calc(-14 * var(--u));
+}
+
+.hd--inner > .nv {
+  align-items: center;
+}
+
+/* month names longer than the design's (September, November…) shrink to fit their cell */
+.wp-block-graphite-availability .av__m {
+  container-type: inline-size;
+  min-width: 0;
+}
+
+.wp-block-graphite-availability .av__name {
+  font-size: min(calc(90 * var(--u)), calc(100cqi / (var(--len, 5) * .62)));
+}
+
+@media (max-width: 1199.98px) {
+  .wp-block-graphite-availability .av__name {
+    font-size: min(calc(90 * var(--u)), calc(100cqi / (var(--len, 5) * .62)));
+  }
+}
+
+/* status lines of the plugin's forms take no room until there is something to say */
+.nx__msg:empty {
+  display: none;
+}
+
+/* the projects block wraps its two sections: the design's "first section of the page" rule is
+   not meant for them */
+@media (max-width: 1199.98px) {
+  .hd + main .gr-projects > .sec:first-child {
+    padding-top: 70px;
+  }
+}
+
+/* shop receipt: WooCommerce's cart on paper; rows WooCommerce has nothing for stay hidden, the
+   button is a link to the checkout */
+.rc__sums [hidden] {
+  display: none;
+}
+
+a.rc__pay {
+  text-decoration: none;
+}
+
+a.rc__pay[aria-disabled="true"] {
+  background: #5a5a57;
+  cursor: not-allowed;
+}
+
+.rc__err {
+  color: #8a1f1f;
+  font-size: max(10px, calc(16 * var(--u)));
+  letter-spacing: .12em;
+}
+
+.rc__err:empty {
+  display: none;
+}
+
+/* shop: product names lead to the product page, in the card's own type */
+.cg__name,
+.bn__name a,
+a.cg__mini {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.cg__mini {
+  color: var(--inv-fg);
+}
+
+.cg__name:hover,
+.bn__name a:hover {
+  text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------- blog
+   The notes are a core Query Loop: its wrappers take no box, so the design's list lays out the
+   notes and the pager directly. */
+.bl__query,
+.bl__posts,
+.bl__posts > li {
+  display: contents;
+}
+
+.bl__cover .wp-block-post-featured-image,
+.bp__cover.wp-block-post-featured-image {
+  margin: 0;
+}
+
+.bl__ph > a {
+  display: block;
+  height: 100%;
+}
+
+.bl__ph.wp-block-post-featured-image img,
+.bp__cover.wp-block-post-featured-image img {
+  width: 100%;
+  height: 100%;
+}
+
+.bl__cat a,
+.bp__cat a {
+  color: inherit;
+}
+
+/* the round arrow of a cover (a link in the design) */
+.bl__cover::after {
+  content: "↗";
+  position: absolute;
+  right: calc(30 * var(--u));
+  bottom: calc(30 * var(--u));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(84 * var(--u));
+  height: calc(84 * var(--u));
+  border-radius: 50%;
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+  font-size: max(16px, calc(32 * var(--u)));
+  transform: scale(0);
+  transition: transform .35s cubic-bezier(.3, 1.6, .5, 1);
+  pointer-events: none;
+}
+
+.bl__post:hover .bl__cover::after {
+  transform: scale(1);
+}
+
+/* meta lines: the design's "·" between the items */
+.bl__meta > * + *::before,
+.bp__meta > * + * + *::before {
+  content: "·";
+  margin-right: calc(24 * var(--u));
+}
+
+.bl__meta,
+.bp__meta {
+  text-transform: uppercase;
+}
+
+.bp__meta a {
+  color: inherit;
+}
+
+/* tags as "#chips" */
+.bl__tags .wp-block-post-terms__separator,
+.bp__tags .wp-block-post-terms__separator {
+  display: none;
+}
+
+.bl__tags a {
+  padding: calc(8 * var(--u)) calc(12 * var(--u));
+  border: calc(1.5 * var(--u)) solid var(--line2);
+  color: inherit;
+  font-size: max(10px, calc(15 * var(--u)));
+  letter-spacing: .08em;
+  white-space: nowrap;
+}
+
+.bl__tags a::before,
+.bp__tags a::before {
+  content: "#";
+}
+
+/* pager: core page numbers and arrows in the design's circles and squares */
+.bl__pager > * {
+  margin: 0;
+}
+
+.bl__step {
+  color: inherit;
+}
+
+.bl__step .is-arrow-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(84 * var(--u));
+  height: calc(84 * var(--u));
+  margin: 0;
+  border: calc(1.5 * var(--u)) solid var(--line2);
+  border-radius: 50%;
+}
+
+.bl__next .is-arrow-arrow {
+  border: 0;
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+}
+
+.bl__prev.is-off {
+  opacity: .3;
+}
+
+.bl__nums .page-numbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(84 * var(--u));
+  height: calc(84 * var(--u));
+  border: calc(1.5 * var(--u)) solid var(--line2);
+  color: inherit;
+  font-family: var(--mono);
+  font-size: max(13px, calc(24 * var(--u)));
+  letter-spacing: 0;
+}
+
+.bl__nums .page-numbers.current {
+  border-color: transparent;
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+}
+
+.bl__nums .page-numbers.dots {
+  border-color: transparent;
+}
+
+/* sidebar tags are links where the design has buttons: same box */
+a.bs__tag {
+  display: block;
+  color: inherit;
+}
+
+/* sidebar search: the design's magnifier before the field, no core frame */
+.bs__search::before {
+  content: "⌕";
+  font-size: max(18px, calc(30 * var(--u)));
+}
+
+.bs__search .wp-block-search__inside-wrapper {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------- one note */
+.bp__facts {
+  padding: 0;
+  list-style: none;
+}
+
+/* the copy's own rhythm (core's flow layout would zero these margins) */
+.bp__copy > .bp__sub {
+  margin: calc(20 * var(--u)) 0 0;
+}
+
+.bp__copy > .bp__quote,
+.bp__copy > .bp__facts {
+  margin: calc(20 * var(--u)) 0;
+}
+
+/* the comment box as the design draws it: the size is the text area's, the padding outside it */
+.bc__form .bc__f textarea {
+  box-sizing: content-box;
+  width: auto;
+}
+
+/* the share rail: links and the copy button in the design's circles */
+.bp__share a,
+.bp__share button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(76 * var(--u));
+  height: calc(76 * var(--u));
+  padding: 0;
+  border: calc(1.5 * var(--u)) solid var(--line2);
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font-size: max(12px, calc(16 * var(--u)));
+  letter-spacing: 0;
+  transition: background .2s, color .2s;
+}
+
+.bp__share a.is-on {
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+}
+
+.bp__facts li {
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+  letter-spacing: .1em;
+}
+
+.bp__facts strong {
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: calc(96 * var(--u));
+  font-weight: 800;
+  letter-spacing: -.06em;
+  line-height: .9;
+}
+
+.bp__av img,
+.bc__av img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.bp__av {
+  overflow: hidden;
+}
+
+/* next and previous: label above the title, the newer one on the left */
+.bp__pn .post-navigation-link__label {
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+}
+
+.bp__pn .post-navigation-link__title {
+  font-size: max(20px, calc(40 * var(--u)));
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.bp__pn .post-navigation-link__title em {
+  font-weight: 400;
+}
+
+.bp__pn .gr-newer a {
+  text-align: left;
+}
+
+.bp__pn .gr-older {
+  grid-column: 2;
+}
+
+/* comments: core's list in the design's rows, replies one step in */
+.bc__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bc__list li {
+  display: grid;
+  grid-template-columns: calc(84 * var(--u)) 1fr;
+  gap: 0 calc(28 * var(--u));
+  padding: calc(36 * var(--u)) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/* a comment with replies: the replies are rows of their own under it */
+.bc__list li:has(> ol) {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.bc__list li > ol {
+  grid-column: 1 / -1;
+  margin: calc(36 * var(--u)) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+
+.bc__list li li {
+  padding-left: calc(112 * var(--u));
+}
+
+.bc__list .bc__av {
+  overflow: hidden;
+}
+
+.bc__acts a {
+  color: var(--mute);
+}
+
+/* the comment form: its parts are the design's rows */
+.bc__form .comment-respond,
+.bc__form .bc__fields {
+  display: contents;
+}
+
+.bc__form .comment-reply-title small a {
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.bc__form .logged-in-as {
+  color: var(--mute);
+  font-size: max(13px, calc(20 * var(--u)));
+}
+
+.bc__form .logged-in-as a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.bc__foot .bc__post {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+@media (max-width: 1199.98px) {
+  .bl__tags a {
+    font-size: 12px;
+  }
+
+  .bl__step .is-arrow-arrow,
+  .bl__nums .page-numbers {
+    width: 44px;
+    height: 44px;
+  }
+
+  .bp__facts li,
+  .bp__pn .post-navigation-link__label {
+    font-size: 12px;
+  }
+
+  .bp__share a,
+  .bp__share button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .bc__acts a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+  }
+}
+
+@media (max-width: 599.98px) {
+  .bp__facts strong {
+    font-size: 40px;
+  }
+
+  .bp__pn .gr-older {
+    grid-column: auto;
+  }
+
+  .bc__list li {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 0 14px;
+  }
+
+  .bc__list li li {
+    padding-left: 24px;
+  }
+
+  .bc__foot .bc__post {
+    width: 100%;
+  }
+}
+
+/* contact map: the live map loads on request; until then the drawn grid and the pin hold the place */
+.mp__show {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  padding: calc(22 * var(--u)) calc(30 * var(--u));
+  border: calc(1.5 * var(--u)) solid var(--fg);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: max(12px, calc(18 * var(--u)));
+  letter-spacing: .12em;
+  transform: translate(-50%, calc(80 * var(--u)));
+  cursor: pointer;
+}
+
+.mp__show:hover,
+.mp__show:focus-visible {
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+}
+
+.mp__from {
+  color: var(--mute);
+  font-size: max(10px, calc(14 * var(--u)));
+}
+
+.mp__show:hover .mp__from,
+.mp__show:focus-visible .mp__from {
+  color: inherit;
+}
+
+/* light scheme: the dimmed greys reach 4.5:1 on the paper (owner, 28.10) — budget rows not yet
+   included read as the design's --mute (#6b6b68) instead of a lighter wash, the letters' senders too */
+:root[data-theme="light"] .bd__item:not(.is-on) {
+  opacity: .62;
+}
+
+:root[data-theme="light"] .bd__item:not(.is-on) .bd__note {
+  opacity: 1;
+}
+
+:root[data-theme="light"] .bd__item:not(.is-on) .bd__top {
+  opacity: 1;
+}
+
+:root[data-theme="light"] .lt__sender {
+  color: var(--mute);
+}
+
+:root[data-theme="light"] .lt__sender.is-on,
+:root[data-theme="light"] .lt__sender:hover {
+  color: var(--fg);
+}
+
+/* notes only editors see: a launch day that is not a real date, a second copy of a one-per-page block */
+.cs__warn,
+.gr-note {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 1em;
+  padding: .6em .9em;
+  border: 1px solid var(--fg);
+  font-size: max(12px, calc(16 * var(--u)));
+}
+
+/* Find the studio: taking the map back (unloads it and forgets the choice), top left of the map */
+.mp__hide {
+  position: absolute;
+  left: calc(40 * var(--u));
+  top: calc(40 * var(--u));
+  z-index: 3;
+  padding: calc(12 * var(--u)) calc(18 * var(--u));
+  border: calc(1.5 * var(--u)) solid var(--fg);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: max(11px, calc(15 * var(--u)));
+  white-space: nowrap;
+}
+
+.mp__hide:hover,
+.mp__hide:focus-visible {
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+}
+
+.mp__show[hidden],
+.mp__hide[hidden],
+.mp__lock[hidden] {
+  display: none;
+}
+
+/* Featured projects: a project without a link shows no link */
+.fe__link[hidden] {
+  display: none;
+}
+
+/* Team by their tools: the button that turns a cube lies over it, invisible until it has the
+   keyboard focus */
+.tc__cube {
+  position: relative;
+}
+
+.tc__turn {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.tc__turn:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 4px;
+}
+
+/* Work drum: previous / next beside the case link (the featured projects' round arrows) */
+.dr__go {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: calc(30 * var(--u));
+}
+
+/* Standard fields and blocks in both schemes (Search, Login/out, comment and dropdown fields,
+   striped tables). The design gives fields the text colour of the page; the browser's own white
+   field would leave that text white on white in the dark scheme. Zero specificity, so every field
+   the design or an author styles keeps its own look. */
+:where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"], [type="submit"], [type="button"], [type="reset"], [type="image"]), textarea, select) {
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+:where(input, textarea)::placeholder {
+  color: var(--mute);
+  opacity: 1;
+}
+
+:where(select) option {
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+/* striped tables: the stripe is a shade of the text colour, readable in both schemes; a table with
+   the author's own background keeps WordPress's stripes */
+.wp-block-table.is-style-stripes:not(.has-background) tbody tr:nth-child(odd) {
+  background-color: color-mix(in srgb, currentColor 9%, transparent);
+}
+
+.wp-block-table.is-style-stripes:not(.has-border-color) {
+  border-bottom-color: var(--line2);
+}
+
+@media (max-width: 1199.98px) {
+  /* the case link sat on its own row, at the start: the arrows go there with it */
+  .dr__go {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    gap: 16px;
+  }
+}
+
+/* Studio board with any number of columns (--n, set by the block): on a wide screen they share
+   the width, on a narrow one the board scrolls sideways as the design's does (wider for more
+   columns); the board grows with its longest column (--rows, set by the script) */
+.kb__board {
+  height: max(calc(800 * var(--u)), calc((100 + var(--rows, 0) * 220) * var(--u)));
+}
+
+.kb__heads li,
+.kb__card {
+  left: calc(var(--c, 0) * 100% / var(--n, 4));
+  width: calc(100% / var(--n, 4) - calc(24 * var(--u)));
+}
+
+.kb__cursor {
+  left: calc(var(--c, 0) * 100% / var(--n, 4) + 60% / var(--n, 4));
+}
+
+@media (max-width: 1199.98px) {
+  .kb__board {
+    min-width: max(900px, calc(var(--n, 4) * 225px));
+  }
+}
+
+/* the pause of a block that moves on its own: a small chip after its label (motion.js) */
+.gr-pause {
+  margin-inline-start: 1em;
+  padding: .25em .7em;
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  letter-spacing: inherit;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.gr-pause[aria-pressed="true"] {
+  border-color: var(--fg);
+}
+
+.gr-pause:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+
+.gr-pause[hidden] {
+  display: none;
+}
+
+/* before a label that changes its words (the question walls), so the button never moves under the
+   pointer */
+.gr-pause:first-child {
+  margin-inline: 0 1em;
+}
+
+/* a block that moves on its own, paused or with the keyboard in it: its endless CSS animations
+   stand still (the review columns, the press lines, the typing caret); one-off entrances are left
+   to finish */
+.is-still .cw__col,
+.is-still .rq__track,
+.is-still .fq__caret {
+  animation-play-state: paused;
+}
+
+.rq__ctl {
+  margin: calc(16 * var(--u)) 0 0;
+  font-size: max(11px, calc(20 * var(--u)));
+  letter-spacing: .12em;
+}
+
+/* keyboard choices laid over a card: a review of the wall, a year of the founder's log (invisible
+   until they have the focus) */
+.cw__card,
+.lf__yr {
+  position: relative;
+}
+
+.cw__pick,
+.lf__pick {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cw__pick:focus-visible,
+.lf__pick:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+.cw__on:focus {
+  outline: none;
+}
+
+.cw__on:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 4px;
+}
+
+.bp__unote {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+/* Charts wider than the screen scroll inside their frame: this line says so (shown by width below). */
+.gr-swipe {
+  display: none;
+  margin: 0 0 12px;
+  color: var(--mute);
+  font-size: 12px;
+  letter-spacing: .1em;
+}
+
+/* Back to top: floats after the first screen, above the shop's cart pill where there is one (main.js). */
+.gr-top {
+  position: fixed;
+  right: max(20px, calc(90 * var(--u)));
+  bottom: max(20px, calc(90 * var(--u)));
+  z-index: 39;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 1px solid var(--bg);
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.gr-top[hidden] {
+  display: none;
+}
+
+.gr-top:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+#top:focus {
+  outline: none;
+}
+
+@media print {
+  .gr-top {
+    display: none;
+  }
+}
+
+/* Each frame scrolls once the screen is narrower than its chart. */
+@media (max-width: 1099.98px) {
+  .pc .gr-swipe {
+    display: block;
+  }
+}
+
+@media (max-width: 999.98px) {
+  .kb .gr-swipe {
+    display: block;
+  }
+}
+
+@media (max-width: 719.98px) {
+  .cm .gr-swipe {
+    display: block;
+  }
+}
+
+/* The page finder: its one column may be narrower than the search row, and a long address breaks. */
+@media (max-width: 1199.98px) {
+  .ff__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ff__input {
+    min-width: 0;
+  }
+}
+
+.ff__slug {
+  overflow-wrap: anywhere;
+}

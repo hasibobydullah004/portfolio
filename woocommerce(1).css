@@ -1,0 +1,2028 @@
+/*
+ * Graphite — WooCommerce's pages (product, product lists, cart, checkout, order received, account)
+ * in the design: square corners, hairline rules, the scheme's own colours, mono labels. Loaded only
+ * while WooCommerce is active; WooCommerce's markup and behaviour are left as they are.
+ */
+
+/* 01. Page frame */
+.gr-woo {
+  padding: max(40px, calc(120 * var(--u))) max(20px, var(--gut)) max(64px, calc(180 * var(--u)));
+  line-height: 1.6;
+}
+
+.gr-woo .gr-title + * {
+  margin-block-start: .8em;
+}
+
+.gr-woo .gr-title {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: clamp(40px, calc(150 * var(--u)), 150px);
+  font-weight: 800;
+  letter-spacing: -.04em;
+  line-height: .95;
+}
+
+.gr-woo .wc-block-breadcrumbs,
+.gr-woo .woocommerce-breadcrumb {
+  margin-block-end: max(16px, calc(40 * var(--u)));
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(17 * var(--u)));
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.gr-woo .wc-block-breadcrumbs a,
+.gr-woo .woocommerce-breadcrumb a {
+  color: var(--soft);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: .25em;
+}
+
+.gr-woo a:not(.wp-element-button, .wc-block-components-button, .button):is(:hover, :focus-visible) {
+  color: var(--fg);
+}
+
+/* 02. Fields */
+.gr-woo.gr-woo :is(input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="password"], input[type="search"], input[type="url"], select, textarea),
+.gr-woo.gr-woo .wc-block-components-text-input input,
+.gr-woo.gr-woo .wc-block-components-combobox .components-combobox-control__input,
+.gr-woo.gr-woo .wc-blocks-components-select .wc-blocks-components-select__select,
+.gr-woo.gr-woo .wc-block-components-textarea {
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+}
+
+.gr-woo.gr-woo :is(input, select, textarea):focus-visible,
+.gr-woo.gr-woo .wc-block-components-text-input input:focus {
+  outline: 2px solid var(--fg);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.gr-woo.gr-woo .wc-block-components-text-input label,
+.gr-woo.gr-woo .wc-blocks-components-select__label,
+.gr-woo.gr-woo .wc-block-components-combobox label,
+.gr-woo.gr-woo .wc-block-components-checkbox__label,
+.gr-woo.gr-woo label {
+  color: var(--soft);
+}
+
+.gr-woo.gr-woo .wc-block-components-text-input.is-active label,
+.gr-woo.gr-woo .wc-block-components-text-input input:-webkit-autofill + label {
+  color: var(--mute);
+}
+
+.gr-woo.gr-woo .wc-block-components-checkbox .wc-block-components-checkbox__input[type="checkbox"],
+.gr-woo.gr-woo .wc-block-components-radio-control__input {
+  border-color: var(--chip-bd);
+  border-radius: 0;
+  background: var(--bg);
+}
+
+.gr-woo.gr-woo .wc-block-components-checkbox .wc-block-components-checkbox__mark {
+  fill: var(--fg);
+}
+
+.gr-woo.gr-woo .wc-block-components-radio-control__input {
+  border-radius: 50%;
+}
+
+.gr-woo.gr-woo .wc-block-components-radio-control__input:checked::before {
+  background: var(--fg);
+}
+
+/* 03. Buttons: the design's solid button (inverted scheme colours), no rounding */
+.gr-woo.gr-woo :is(.wp-element-button, .wc-block-components-button:not(.is-link), .button, button.single_add_to_cart_button),
+.gr-woo.gr-woo .wc-block-cart__submit-button,
+.gr-woo.gr-woo .wc-block-components-checkout-place-order-button {
+  min-height: 48px;
+  padding: .8em 1.6em;
+  border: 1px solid var(--inv-bg);
+  border-radius: 0;
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+  font-family: var(--sans);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background .2s, color .2s;
+}
+
+.gr-woo.gr-woo :is(.wp-element-button, .wc-block-components-button:not(.is-link), .button, button.single_add_to_cart_button):is(:hover, :focus-visible) {
+  background: transparent;
+  color: var(--fg);
+}
+
+.gr-woo.gr-woo .wc-block-components-button.is-link,
+.gr-woo.gr-woo .wc-block-components-totals-coupon-link {
+  color: var(--fg);
+}
+
+/* 04. Panels, notices, summaries */
+.gr-woo.gr-woo .wc-block-components-sidebar-layout .wc-block-components-sidebar,
+.gr-woo.gr-woo .wc-block-components-totals-wrapper,
+.gr-woo.gr-woo .wc-block-components-order-summary,
+.gr-woo.gr-woo .wc-block-checkout__sidebar .wc-block-components-checkout-order-summary__content,
+.gr-woo.gr-woo .wc-block-components-panel,
+.gr-woo.gr-woo table.shop_table,
+.gr-woo.gr-woo .wc-block-order-confirmation-summary {
+  border-color: var(--line);
+  border-radius: 0;
+}
+
+.gr-woo.gr-woo .wc-block-checkout__sidebar .wp-block-woocommerce-checkout-order-summary-block {
+  border: 1px solid var(--line);
+  border-radius: 0;
+}
+
+.gr-woo.gr-woo .wc-block-components-notice-banner,
+.gr-woo.gr-woo .woocommerce-message,
+.gr-woo.gr-woo .woocommerce-info,
+.gr-woo.gr-woo .woocommerce-error {
+  border-radius: 0;
+  background: var(--band);
+  color: var(--fg);
+}
+
+.gr-woo.gr-woo .wc-block-components-notice-banner > .wc-block-components-notice-banner__content .wc-forward,
+.gr-woo.gr-woo .wc-block-components-notice-banner a {
+  color: var(--fg);
+}
+
+.gr-woo.gr-woo .wc-block-components-title,
+.gr-woo.gr-woo .wc-block-components-checkout-step__title,
+.gr-woo.gr-woo .wc-block-cart__totals-title,
+.gr-woo.gr-woo .wc-block-order-confirmation-totals__title,
+.gr-woo.gr-woo .wp-block-heading {
+  font-family: var(--sans);
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.gr-woo.gr-woo .wc-block-cart-items__header,
+.gr-woo.gr-woo .wc-block-components-checkout-step__description,
+.gr-woo.gr-woo .wc-block-components-totals-item__description,
+.gr-woo.gr-woo .wc-block-components-product-metadata {
+  color: var(--mute);
+}
+
+.gr-woo.gr-woo .wc-block-cart-items__header,
+.gr-woo.gr-woo .wc-block-components-product-details,
+.gr-woo.gr-woo .wc-block-components-sale-badge {
+  font-family: var(--mono);
+  letter-spacing: .06em;
+}
+
+.gr-woo.gr-woo .wc-block-cart-items td,
+.gr-woo.gr-woo .wc-block-cart-items th,
+.gr-woo.gr-woo .wc-block-cart-items__header,
+.gr-woo.gr-woo .wc-block-components-totals-item,
+.gr-woo.gr-woo .wc-block-components-totals-footer-item {
+  border-color: var(--line);
+}
+
+.gr-woo.gr-woo .wc-block-components-quantity-selector {
+  border-radius: 0;
+}
+
+.gr-woo.gr-woo .wc-block-components-quantity-selector::after {
+  border-color: var(--line);
+  border-radius: 0;
+}
+
+.gr-woo.gr-woo .wc-block-components-quantity-selector input.wc-block-components-quantity-selector__input,
+.gr-woo.gr-woo .wc-block-components-quantity-selector .wc-block-components-quantity-selector__button {
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+}
+
+/* loading placeholders: a hairline shade of the scheme, not WooCommerce's grey */
+.gr-woo.gr-woo .wc-block-components-skeleton__element,
+.gr-woo.gr-woo .is-loading :is(.wc-block-components-product-name, .wc-block-components-product-price, .wc-block-components-totals-item) {
+  background: var(--ph-faint);
+}
+
+/* 05. One product (doubled class: WooCommerce's own product rules are long selectors) */
+.gr-woo--product.gr-woo .gr-woo__cols {
+  gap: max(24px, calc(90 * var(--u)));
+  margin-block: 0 max(40px, calc(120 * var(--u)));
+}
+
+.gr-woo--product.gr-woo .gr-woo__price {
+  margin-block: 1em .6em;
+  font-family: var(--mono);
+  font-size: max(18px, calc(32 * var(--u)));
+}
+
+.gr-woo--product.gr-woo .wp-block-post-excerpt {
+  color: var(--soft);
+}
+
+.gr-woo.gr-woo .woocommerce-product-gallery__image,
+.gr-woo.gr-woo .wc-block-components-product-image,
+.gr-woo.gr-woo .wp-block-woocommerce-product-image {
+  border: 1px solid var(--line);
+  background: var(--ph-bg);
+}
+
+.gr-woo.gr-woo img.woocommerce-placeholder,
+.gr-woo.gr-woo .wc-block-components-product-image img[src*="woocommerce-placeholder"] {
+  opacity: .18;
+  filter: grayscale(1);
+}
+
+/* a product without pictures: the design's empty frame (hatched), as the catalogue cards show it */
+.gr-woo.gr-woo .woocommerce-product-gallery--without-images,
+.gr-woo.gr-woo .wc-block-components-product-image:has(img[src*="woocommerce-placeholder"]) {
+  background: repeating-linear-gradient(135deg, var(--ph-faint) 0 1px, transparent 1px 12px), var(--ph-bg);
+}
+
+.gr-woo.gr-woo .variations {
+  margin-block: 1.4em;
+  border: 0;
+}
+
+.gr-woo.gr-woo .variations th,
+.gr-woo.gr-woo .variations td {
+  padding: .4em 1em .4em 0;
+  border: 0;
+  background: none;
+  font-family: var(--mono);
+  font-size: max(12px, calc(18 * var(--u)));
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.gr-woo.gr-woo .reset_variations {
+  margin-inline-start: 1em;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--soft);
+  font-family: var(--mono);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.gr-woo.gr-woo form.cart {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 12px;
+  margin-block: 1.4em;
+}
+
+.gr-woo.gr-woo form.cart .quantity input {
+  width: 4.5em;
+  height: 100%;
+  min-height: 48px;
+  text-align: center;
+}
+
+.gr-woo.gr-woo form.variations_form .single_variation_wrap {
+  flex-basis: 100%;
+}
+
+.gr-woo.gr-woo form.variations_form .woocommerce-variation-add-to-cart {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.gr-woo.gr-woo .woocommerce-variation-price {
+  margin-block-end: 1em;
+  font-family: var(--mono);
+}
+
+.gr-woo.gr-woo .gr-woo__meta {
+  gap: .4em 2em;
+  padding-block-start: 1.2em;
+  border-top: 1px solid var(--line);
+  color: var(--mute);
+  font-size: max(11px, calc(16 * var(--u)));
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.gr-woo.gr-woo .gr-woo__meta a {
+  color: var(--soft);
+  text-decoration: none;
+}
+
+.gr-woo.gr-woo .woocommerce-tabs ul.tabs,
+.gr-woo.gr-woo .wc-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2em;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--line);
+  list-style: none;
+}
+
+.gr-woo.gr-woo .woocommerce-tabs ul.tabs.wc-tabs li,
+.gr-woo.gr-woo .woocommerce-tabs ul.tabs.wc-tabs li.active,
+.gr-woo.gr-woo .wc-tabs li {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.gr-woo.gr-woo .woocommerce-tabs ul.tabs.wc-tabs li::before,
+.gr-woo.gr-woo .woocommerce-tabs ul.tabs.wc-tabs li::after,
+.gr-woo.gr-woo .woocommerce-tabs ul.tabs.wc-tabs::before {
+  display: none;
+}
+
+.gr-woo.gr-woo .woocommerce-tabs ul.tabs.wc-tabs li a,
+.gr-woo.gr-woo .wc-tabs li a {
+  display: block;
+  padding: .9em 0;
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(12px, calc(18 * var(--u)));
+  letter-spacing: .1em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.gr-woo.gr-woo .woocommerce-tabs ul.tabs.wc-tabs li.active a,
+.gr-woo.gr-woo .wc-tabs li.active a {
+  box-shadow: inset 0 -2px 0 var(--fg);
+  color: var(--fg);
+}
+
+.gr-woo.gr-woo .woocommerce-Tabs-panel {
+  padding-block: 1.6em;
+}
+
+.gr-woo.gr-woo .woocommerce-product-attributes {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.gr-woo.gr-woo .woocommerce-product-attributes :is(th, td) {
+  padding: .7em 1em .7em 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  font-style: normal;
+  text-align: left;
+}
+
+.gr-woo.gr-woo .woocommerce-product-attributes th {
+  width: 30%;
+  color: var(--mute);
+  font-family: var(--mono);
+  font-weight: 400;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.gr-woo.gr-woo .woocommerce-product-attributes td p {
+  margin: 0;
+}
+
+/* 06. Product lists (All products, categories, search, related) */
+.gr-woo .gr-woo__bar {
+  margin-block: max(20px, calc(50 * var(--u))) max(16px, calc(30 * var(--u)));
+  color: var(--mute);
+  font-size: max(11px, calc(16 * var(--u)));
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.gr-woo .gr-woo__bar :is(p, form) {
+  margin: 0;
+}
+
+.gr-woo .wc-block-product-template {
+  gap: max(16px, calc(40 * var(--u)));
+}
+
+.gr-woo .wc-block-product-template > li {
+  margin: 0;
+  padding-block-end: 1em;
+  border-bottom: 1px solid var(--line);
+}
+
+.gr-woo .wc-block-product-template :is(.gr-woo__name, .wp-block-post-title) {
+  margin-block: .8em .3em;
+  font-family: var(--sans);
+  font-size: max(17px, calc(30 * var(--u)));
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.gr-woo .wc-block-product-template .wp-block-post-title a {
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.gr-woo .wc-block-product-template .wp-block-woocommerce-product-price {
+  margin-block-end: .8em;
+  color: var(--soft);
+  font-family: var(--mono);
+}
+
+.gr-woo .wp-block-query-pagination {
+  margin-block-start: 2em;
+  font-family: var(--mono);
+}
+
+.gr-woo .wp-block-query-pagination a {
+  color: var(--soft);
+  text-decoration: none;
+}
+
+/* 07. Checkout: WooCommerce's checkout block in the design of the HTML checkout (original/checkout.html).
+ * Only WooCommerce's markup is styled; its fields, steps and payment flow stay its own.
+ * Steps are numbered by a counter; their hints come from the theme (setup.php) as --gr-co-hint-*. */
+.gr-woo .wc-block-components-radio-control-accordion-option,
+.gr-woo .wc-block-components-radio-control__option {
+  border-color: var(--line);
+}
+
+.gr-woo .wc-block-checkout__terms,
+.gr-woo .wc-block-components-checkout-return-to-cart-button {
+  color: var(--soft);
+}
+
+.gr-co.gr-woo {
+  padding: 0 var(--gut) calc(120 * var(--u));
+}
+
+.gr-co.gr-woo > *,
+.gr-co.gr-woo .wp-block-woocommerce-checkout {
+  max-width: none;
+  margin: 0;
+}
+
+.gr-co-title.gr-woo {
+  padding-bottom: 0;
+}
+
+/* the frame: steps on the left, the order summary on the right */
+.gr-co.gr-co.gr-co .wc-block-components-sidebar-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(820 * var(--u));
+  column-gap: calc(110 * var(--u));
+  align-items: start;
+  margin: 0;
+  padding-top: calc(60 * var(--u));
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-sidebar-layout > :not(.wc-block-components-main, .wc-block-components-sidebar) {
+  grid-column: 1 / -1;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-main {
+  grid-row: 1;
+  grid-column: 1;
+  width: auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__form {
+  margin: 0;
+  counter-reset: gr-step;
+}
+
+/* a step: its number, title and hint on the left, WooCommerce's fields on the right */
+.gr-co.gr-co.gr-co .wc-block-checkout__form > .wc-block-components-checkout-step:not(.wc-block-checkout__order-notes) {
+  display: flow-root;
+  position: relative;
+  margin: 0;
+  padding: calc(70 * var(--u)) 0;
+  border-top: 1px solid var(--line2);
+  counter-increment: gr-step;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-step::after,
+.gr-co.gr-co.gr-co .wc-block-components-checkout-step__container::after {
+  display: none;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-step__heading-container {
+  float: left;
+  clear: left;
+  width: calc(420 * var(--u));
+  margin: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-step__heading-container::before {
+  content: counter(gr-step, decimal-leading-zero);
+  display: block;
+  margin-bottom: calc(14 * var(--u));
+  font-family: var(--serif);
+  font-size: calc(72 * var(--u));
+  font-style: italic;
+  line-height: .9;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-step__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(14 * var(--u));
+  margin: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-step__title {
+  margin: 0;
+  font-size: calc(44 * var(--u));
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.36;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-step__heading-content {
+  color: var(--mute);
+  font-size: max(14px, calc(22 * var(--u)));
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-step__heading-content a {
+  color: var(--fg);
+  border-bottom: 1.5px solid var(--fg);
+  text-decoration: none;
+}
+
+/* the hint under the title: WooCommerce's step description, else the theme's line */
+.gr-co.gr-co.gr-co .wc-block-components-checkout-step__heading-container::after,
+.gr-co.gr-co.gr-co .wc-block-components-checkout-step__description {
+  display: block;
+  margin: calc(14 * var(--u)) 0 0;
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+  letter-spacing: .12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.gr-co.gr-co.gr-co #contact-fields .wc-block-components-checkout-step__heading-container::after {
+  content: var(--gr-co-hint-contact, none);
+}
+
+.gr-co.gr-co.gr-co #billing-fields .wc-block-components-checkout-step__heading-container::after {
+  content: var(--gr-co-hint-billing, none);
+}
+
+.gr-co.gr-co.gr-co #shipping-fields .wc-block-components-checkout-step__heading-container::after {
+  content: var(--gr-co-hint-shipping, none);
+}
+
+.gr-co.gr-co.gr-co #shipping-option .wc-block-components-checkout-step__heading-container::after {
+  content: var(--gr-co-hint-delivery, none);
+}
+
+.gr-co.gr-co.gr-co #payment-method .wc-block-components-checkout-step__heading-container::after {
+  content: var(--gr-co-hint-payment, none);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-step__description {
+  float: left;
+  clear: left;
+  width: calc(420 * var(--u));
+}
+
+/* everything WooCommerce puts in a step sits in the field column */
+.gr-co.gr-co.gr-co .wc-block-checkout__form > .wc-block-components-checkout-step:not(.wc-block-checkout__order-notes) > .wc-block-components-checkout-step__content {
+  display: contents;
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__form > .wc-block-components-checkout-step:not(.wc-block-checkout__order-notes) > .wc-block-components-checkout-step__content > :not(.wc-block-components-checkout-step__description) {
+  margin-left: calc(500 * var(--u));
+}
+
+/* fields: a box with the label always on top */
+.gr-co.gr-co.gr-co .wc-block-components-address-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(18 * var(--u));
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-address-form > * {
+  flex: 0 0 100%;
+  margin: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-address-form > :is(.wc-block-components-address-form__first_name, .wc-block-components-address-form__last_name, .wc-block-components-address-form__city, .wc-block-components-address-form__state, .wc-block-components-address-form__postcode, .wc-block-components-address-form__phone) {
+  flex: 0 0 calc(50% - calc(9 * var(--u)));
+  min-width: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-text-input,
+.gr-co.gr-co.gr-co .wc-blocks-components-select__container,
+.gr-co.gr-co.gr-co .wc-block-components-combobox-control {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--u));
+  height: auto;
+  margin: 0;
+  padding: calc(18 * var(--u)) calc(24 * var(--u));
+  border: 1.5px solid var(--line2);
+  border-radius: 0;
+  background: var(--ph-bg);
+  transition: border-color .2s;
+}
+
+.gr-co.gr-co.gr-co .wc-blocks-components-select {
+  margin: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-text-input:focus-within,
+.gr-co.gr-co.gr-co .wc-blocks-components-select__container:focus-within {
+  border-color: var(--fg);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-text-input label,
+.gr-co.gr-co.gr-co .wc-blocks-components-select__label {
+  position: static;
+  order: -1;
+  max-width: none;
+  margin: 0;
+  transform: none;
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+  letter-spacing: .12em;
+  line-height: normal;
+  text-transform: uppercase;
+  transition: color .2s;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-text-input input,
+.gr-co.gr-co.gr-co .wc-blocks-components-select .wc-blocks-components-select__select {
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  background: transparent;
+  color: var(--fg);
+  font: 500 max(16px, calc(28 * var(--u))) / normal var(--sans);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-text-input input::placeholder {
+  color: var(--mute);
+}
+
+.gr-co.gr-co.gr-co .wc-blocks-components-select .wc-blocks-components-select__select {
+  padding-right: calc(40 * var(--u));
+  appearance: none;
+  cursor: pointer;
+}
+
+.gr-co.gr-co.gr-co .wc-blocks-components-select__select option {
+  background: #161617;
+  color: #f4f4f2;
+}
+
+:root[data-theme="light"] .gr-co.gr-co.gr-co .wc-blocks-components-select__select option {
+  background: #f4f4f2;
+  color: #161617;
+}
+
+.gr-co.gr-co.gr-co .wc-blocks-components-select__expand {
+  display: none;
+}
+
+.gr-co.gr-co.gr-co .wc-blocks-components-select__container::after {
+  content: "▼";
+  position: absolute;
+  right: calc(26 * var(--u));
+  bottom: calc(26 * var(--u));
+  color: var(--mute);
+  font-size: max(10px, calc(14 * var(--u)));
+  pointer-events: none;
+}
+
+/* errors: red frame and label, the message under the box */
+.gr-co.gr-co.gr-co :is(.wc-block-components-text-input, .wc-blocks-components-select).has-error,
+.gr-co.gr-co.gr-co .has-error .wc-blocks-components-select__container {
+  border-color: #e5484d;
+}
+
+.gr-co.gr-co.gr-co .has-error :is(label, .wc-blocks-components-select__label) {
+  color: #e5484d;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-text-input.has-error {
+  margin-bottom: calc(36 * var(--u));
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-validation-error {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: calc(10 * var(--u));
+  color: #e5484d;
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-validation-error svg {
+  display: none;
+}
+
+/* WooCommerce lays the message out as a flex row, where a trailing space would be dropped */
+.gr-co.gr-co.gr-co .wc-block-components-validation-error > p::before {
+  content: "( ! )";
+  margin-right: .7em;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-validation-error > p {
+  margin: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-address-form__address_2-toggle {
+  align-self: flex-start;
+  color: var(--fg);
+  font: 600 max(14px, calc(22 * var(--u))) / 1.36 var(--sans);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__guest-checkout-notice {
+  margin: 0;
+  color: var(--mute);
+  font-size: max(14px, calc(22 * var(--u)));
+}
+
+/* a saved address: one card, "Edit" on the right */
+.gr-co.gr-co.gr-co .wc-block-components-address-card {
+  margin: 0;
+  padding: calc(28 * var(--u));
+  border: 1.5px solid var(--line2);
+  border-radius: 0;
+  background: var(--ph-bg);
+  font-size: max(15px, calc(24 * var(--u)));
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-address-card__edit {
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+  letter-spacing: .12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* payment: a card per method, the chosen one framed, its details inside */
+.gr-co.gr-co.gr-co .wc-block-components-radio-control {
+  display: flex;
+  flex-direction: column;
+  gap: calc(18 * var(--u));
+  box-shadow: none;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-radio-control::after,
+.gr-co.gr-co.gr-co .wc-block-components-radio-control-accordion-option::after,
+.gr-co.gr-co.gr-co .wc-block-components-radio-control__option::after {
+  display: none;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-radio-control-accordion-option,
+.gr-co.gr-co.gr-co .wc-block-components-radio-control > .wc-block-components-radio-control__option {
+  border: 1.5px solid var(--line2);
+  border-radius: 0;
+  box-shadow: none;
+  transition: border-color .2s, background-color .2s;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-radio-control-accordion-option--checked-option-highlighted,
+.gr-co.gr-co.gr-co .wc-block-components-radio-control > .wc-block-components-radio-control__option-checked {
+  border-color: var(--fg);
+  background: rgba(255, 255, 255, .04);
+}
+
+:root[data-theme="light"] .gr-co.gr-co.gr-co .wc-block-components-radio-control-accordion-option--checked-option-highlighted,
+:root[data-theme="light"] .gr-co.gr-co.gr-co .wc-block-components-radio-control > .wc-block-components-radio-control__option-checked {
+  background: rgba(0, 0, 0, .03);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-radio-control__option {
+  margin: 0;
+  padding: calc(28 * var(--u)) calc(28 * var(--u)) calc(28 * var(--u)) calc(calc(28 * var(--u)) + calc(34 * var(--u)) + calc(22 * var(--u)));
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-radio-control-accordion-option .wc-block-components-radio-control__option {
+  border: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-radio-control .wc-block-components-radio-control__input {
+  position: absolute;
+  top: 50%;
+  left: calc(28 * var(--u));
+  width: calc(30 * var(--u));
+  min-width: 16px;
+  height: calc(30 * var(--u));
+  min-height: 16px;
+  margin: 0;
+  border: 1.5px solid var(--line2);
+  border-radius: 50%;
+  background: transparent;
+  transform: translateY(-50%);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-radio-control .wc-block-components-radio-control__input:checked {
+  border-color: var(--fg);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-radio-control .wc-block-components-radio-control__input:checked::before {
+  width: calc(14 * var(--u));
+  min-width: 8px;
+  height: calc(14 * var(--u));
+  min-height: 8px;
+  background: var(--fg);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-radio-control .wc-block-components-radio-control__input:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 4px;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-radio-control__label,
+.gr-co.gr-co.gr-co .wc-block-components-payment-method-label {
+  color: var(--fg);
+  font-size: max(16px, calc(28 * var(--u)));
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-radio-control__secondary-label,
+.gr-co.gr-co.gr-co .wc-block-components-radio-control__description,
+.gr-co.gr-co.gr-co .wc-block-components-radio-control__secondary-description {
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+  letter-spacing: .1em;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-radio-control-accordion-content {
+  padding: 0 calc(28 * var(--u)) calc(28 * var(--u));
+  color: var(--mute);
+  font-size: max(14px, calc(22 * var(--u)));
+  line-height: 1.5;
+}
+
+/* no payment method set up: the red box, and Place order shown as unavailable */
+.gr-co.gr-co.gr-co .wc-block-checkout__no-payment-methods-notice {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: calc(22 * var(--u));
+  margin: 0;
+  padding: calc(30 * var(--u)) calc(32 * var(--u));
+  border: 1.5px solid #e5484d;
+  border-radius: 0;
+  background: rgba(229, 72, 77, .08);
+  color: var(--fg);
+  font-size: max(15px, calc(26 * var(--u)));
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__no-payment-methods-notice::before {
+  content: "( ! )";
+  color: #e5484d;
+  font-family: var(--mono);
+  font-size: max(12px, calc(20 * var(--u)));
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__no-payment-methods-notice > svg {
+  display: none;
+}
+
+/* the order note: right under the payment cards, a square box that opens the textarea */
+.gr-co.gr-co.gr-co .wc-block-checkout__form > .wc-block-components-checkout-step:has(+ .wc-block-checkout__order-notes) {
+  padding-bottom: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__order-notes {
+  margin: 0;
+  padding: calc(40 * var(--u)) 0 calc(70 * var(--u)) calc(500 * var(--u));
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__order-notes .wc-block-components-checkout-step__content {
+  padding: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__add-note,
+.gr-co.gr-co.gr-co .wc-block-components-checkbox {
+  margin: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: calc(18 * var(--u));
+  color: var(--fg);
+  font-size: max(15px, calc(24 * var(--u)));
+  cursor: pointer;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkbox .wc-block-components-checkbox__input[type="checkbox"] {
+  flex: none;
+  width: calc(30 * var(--u));
+  min-width: 16px;
+  height: calc(30 * var(--u));
+  min-height: 16px;
+  margin: 0;
+  border: 1.5px solid var(--fg);
+  border-radius: 0;
+  background: transparent;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkbox .wc-block-components-checkbox__input[type="checkbox"]:checked {
+  background: var(--fg);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkbox .wc-block-components-checkbox__input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 4px;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkbox .wc-block-components-checkbox__mark {
+  left: calc(calc(15 * var(--u)) - 7px);
+  width: 14px;
+  margin: 0;
+  fill: var(--inv-fg);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkbox__label {
+  color: var(--fg);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-textarea {
+  margin-top: calc(18 * var(--u));
+  padding: calc(22 * var(--u)) calc(24 * var(--u));
+  border: 1.5px solid var(--line2);
+  border-radius: 0;
+  outline: 0;
+  background: var(--ph-bg);
+  color: var(--fg);
+  font: 400 max(16px, calc(26 * var(--u))) / 1.5 var(--sans);
+  resize: vertical;
+  transition: border-color .2s;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-textarea:focus {
+  border-color: var(--fg);
+  outline: 0;
+}
+
+/* terms and Place order, aligned with the field column */
+.gr-co.gr-co.gr-co .wc-block-checkout__terms {
+  margin: 0;
+  padding: calc(60 * var(--u)) 0 0 calc(500 * var(--u));
+  border-top: 1px solid var(--line2);
+  color: var(--mute);
+  font-size: max(14px, calc(22 * var(--u)));
+  line-height: 1.5;
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__terms::before {
+  display: none;
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__terms a {
+  color: var(--fg);
+  border-bottom: 1px solid var(--fg);
+  text-decoration: none;
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__terms .wc-block-components-checkbox__label {
+  color: inherit;
+  font-size: inherit;
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__actions {
+  margin: 0;
+  padding: calc(30 * var(--u)) 0 0 calc(500 * var(--u));
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__actions .wc-block-components-notices:not(:empty) {
+  margin-bottom: calc(30 * var(--u));
+}
+
+.gr-co.gr-co.gr-co .wc-block-checkout__actions_row {
+  gap: calc(30 * var(--u));
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 0;
+  padding: calc(34 * var(--u)) calc(44 * var(--u));
+  border: 0;
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+  font: 800 max(17px, calc(30 * var(--u))) / 1.36 var(--sans);
+  transition: opacity .2s;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button:is(:hover, :focus-visible) {
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+  opacity: .9;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 4px;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button .wc-block-components-button__text,
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button__text {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  gap: calc(30 * var(--u));
+}
+
+/* the price WooCommerce adds to the button (actions block style "With price"): pushed right, an arrow after it */
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button__separator {
+  display: none;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button__price {
+  margin-left: auto;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button__price::after {
+  content: " →";
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button:disabled:not(:has(.wc-block-components-spinner)),
+.gr-co.gr-co.gr-co .wc-block-checkout:has(.wc-block-checkout__no-payment-methods-notice) .wc-block-components-checkout-place-order-button {
+  cursor: not-allowed;
+  opacity: .35;
+}
+
+/* processing: a bar runs along the bottom edge instead of WooCommerce's spinner */
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button .wc-block-components-spinner {
+  display: none;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button:has(.wc-block-components-spinner) {
+  cursor: progress;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button:has(.wc-block-components-spinner) .wc-block-components-button__text {
+  visibility: visible;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(5 * var(--u));
+  min-height: 3px;
+  background: var(--inv-fg);
+  transform: scaleX(0);
+  transform-origin: 0 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button:has(.wc-block-components-spinner)::after {
+  animation: gr-co-bar 1.6s linear forwards;
+}
+
+@keyframes gr-co-bar {
+  to {
+    transform: none;
+  }
+}
+
+/* the order summary: a sticky receipt */
+.gr-co.gr-co.gr-co .wc-block-components-sidebar {
+  position: sticky;
+  top: calc(40 * var(--u));
+  grid-row: 1;
+  grid-column: 2;
+  width: auto;
+  margin: calc(70 * var(--u)) 0 0;
+  padding: 0;
+}
+
+/* the summary sits in the sidebar, and on phones WooCommerce adds one above Place order */
+.gr-co.gr-co.gr-co .wp-block-woocommerce-checkout-order-summary-block {
+  border: 1.5px solid var(--line2);
+  background: var(--ph-bg);
+}
+
+.gr-co.gr-co.gr-co .checkout-order-summary-block-fill-wrapper {
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.gr-co.gr-co.gr-co .checkout-order-summary-block-fill-wrapper > :first-child {
+  margin: 0 0 12px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.gr-co.gr-co.gr-co .checkout-order-summary-block-fill {
+  border: 1.5px solid var(--line2);
+  border-radius: 0;
+  background: var(--ph-bg);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-order-summary__title {
+  margin: 0;
+  padding: calc(40 * var(--u)) calc(44 * var(--u));
+  border-bottom: 1px solid var(--line2);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-order-summary__title-text {
+  margin: 0;
+  font-size: calc(44 * var(--u));
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.36;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-checkout-order-summary__content {
+  border: 0;
+}
+
+.gr-co.gr-co.gr-co .wp-block-woocommerce-checkout-order-summary-block .wc-block-components-totals-wrapper {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary {
+  padding: 0 calc(44 * var(--u));
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary .wc-block-components-order-summary__content {
+  display: block;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary-item {
+  display: grid;
+  grid-template-columns: calc(120 * var(--u)) minmax(0, 1fr) auto;
+  align-items: start;
+  gap: calc(28 * var(--u));
+  margin: 0;
+  padding: calc(32 * var(--u)) 0;
+  border-bottom: 1px solid var(--line);
+  font-size: inherit;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary-item__image {
+  position: relative;
+  width: calc(calc(120 * var(--u)) + 2px);
+  height: calc(calc(120 * var(--u)) + 2px);
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line2);
+  background: repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px calc(14 * var(--u)));
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary-item__image > img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary-item__image > img[src*="woocommerce-placeholder"] {
+  opacity: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary-item__quantity {
+  top: calc(-14 * var(--u));
+  right: calc(-14 * var(--u));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  width: calc(36 * var(--u));
+  min-height: 0;
+  height: calc(36 * var(--u));
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--inv-bg);
+  box-shadow: none;
+  color: var(--inv-fg);
+  font-family: var(--mono);
+  font-size: max(11px, calc(16 * var(--u)));
+  line-height: 1;
+  transform: none;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary-item__description {
+  display: flex;
+  flex-direction: column;
+  gap: calc(10 * var(--u));
+  min-width: 0;
+  padding: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary-item .wc-block-components-product-name {
+  margin: 0;
+  color: var(--fg);
+  font-size: max(17px, calc(30 * var(--u)));
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary-item .wc-block-cart-item__prices,
+.gr-co.gr-co.gr-co .wc-block-components-order-summary-item .wc-block-components-product-metadata__description {
+  display: none;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary-item .wc-block-components-product-metadata {
+  margin: 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary-item .wc-block-components-product-details {
+  margin: 0;
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-order-summary-item__total-price {
+  margin: 0;
+  color: var(--fg);
+  font-size: max(16px, calc(28 * var(--u)));
+  font-weight: 600;
+}
+
+/* the coupon: a row that opens the code field */
+.gr-co.gr-co.gr-co .wc-block-components-totals-coupon {
+  margin: 0;
+  /* WooCommerce zeroes the button's left padding with !important: the frame pads the panel instead */
+  padding: 0 calc(44 * var(--u));
+  border-bottom: 1px solid var(--line2);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-coupon .wc-block-components-panel__button.wc-block-components-panel__button {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: calc(30 * var(--u)) 0;
+  color: var(--fg);
+  font: 600 max(15px, calc(26 * var(--u))) / 1.36 var(--sans);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-panel__button-icon {
+  position: static;
+  width: max(14px, calc(20 * var(--u)));
+  height: max(14px, calc(20 * var(--u)));
+  fill: currentColor;
+  transform: none;
+  transition: transform .2s;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-panel__button[aria-expanded="true"] .wc-block-components-panel__button-icon {
+  transform: rotate(180deg);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-coupon .wc-block-components-panel__content {
+  padding: 0 0 calc(30 * var(--u));
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-coupon__form {
+  display: flex;
+  gap: calc(12 * var(--u));
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-coupon__form .wc-block-components-text-input {
+  flex: 1;
+  padding: calc(14 * var(--u)) calc(22 * var(--u));
+  background: transparent;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-coupon__form .wc-block-components-text-input input {
+  font-family: var(--mono);
+  font-size: max(16px, calc(20 * var(--u)));
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-coupon__button {
+  min-height: 0;
+  padding: calc(20 * var(--u)) calc(30 * var(--u));
+  border: 0;
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+  font: 700 max(14px, calc(22 * var(--u))) / 1.36 var(--sans);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-coupon__button:is(:hover, :focus-visible) {
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+  opacity: .9;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-coupon .wc-block-components-validation-error {
+  position: static;
+}
+
+/* subtotal, discounts, fees, shipping and taxes */
+.gr-co.gr-co.gr-co .wp-block-woocommerce-checkout-order-summary-totals-block {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16 * var(--u));
+  padding: calc(30 * var(--u)) calc(44 * var(--u));
+  border-bottom: 1px solid var(--line2);
+}
+
+.gr-co.gr-co.gr-co .wp-block-woocommerce-checkout-order-summary-totals-block:not(:has(.wc-block-components-totals-item)) {
+  display: none;
+}
+
+.gr-co.gr-co.gr-co .wp-block-woocommerce-checkout-order-summary-totals-block .wc-block-components-totals-item {
+  margin: 0;
+  padding: 0;
+  font-size: max(15px, calc(24 * var(--u)));
+}
+
+.gr-co.gr-co.gr-co .wp-block-woocommerce-checkout-order-summary-totals-block .wc-block-components-totals-item__label {
+  color: var(--mute);
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-item__description:empty {
+  display: none;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-discount__coupon-list {
+  margin: calc(8 * var(--u)) 0 0;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-chip {
+  border: 1px solid var(--line2);
+  border-radius: 0;
+  background: transparent;
+  color: var(--fg);
+  font-family: var(--mono);
+  letter-spacing: .1em;
+}
+
+/* the total: the mono label, the sum large */
+.gr-co.gr-co.gr-co .wc-block-components-totals-footer-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0;
+  padding: calc(36 * var(--u)) calc(44 * var(--u));
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-footer-item .wc-block-components-totals-item__label {
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(18 * var(--u)));
+  font-weight: 400;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-footer-item .wc-block-components-totals-item__value {
+  font-size: calc(84 * var(--u));
+  font-weight: 800;
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+
+.gr-co.gr-co.gr-co .wc-block-components-totals-footer-item .wc-block-components-totals-item__description {
+  flex-basis: 100%;
+  color: var(--mute);
+  font-size: max(12px, calc(18 * var(--u)));
+  text-align: right;
+}
+
+/* tablet and phone: one column, the summary first (not sticky), the step title above its fields */
+@media (max-width: 1199.98px) {
+  .gr-co.gr-co.gr-co .wc-block-components-sidebar-layout {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 28px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-sidebar {
+    position: static;
+    grid-row: 1;
+    grid-column: 1;
+    margin: 0 0 32px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-main {
+    grid-row: 2;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-checkout__form > .wc-block-components-checkout-step:not(.wc-block-checkout__order-notes) {
+    padding: 32px 0;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-checkout-step__heading-container,
+  .gr-co.gr-co.gr-co .wc-block-components-checkout-step__description {
+    float: none;
+    width: auto;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-checkout-step__heading-container {
+    margin-bottom: 20px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-checkout-step__heading-container::before {
+    display: inline-block;
+    margin: 0 14px 0 0;
+    font-size: 36px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-checkout-step__heading {
+    display: inline-flex;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-checkout-step__title {
+    font-size: 26px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-checkout-step__heading-container::after,
+  .gr-co.gr-co.gr-co .wc-block-components-checkout-step__description {
+    margin-top: 6px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-checkout__form > .wc-block-components-checkout-step:not(.wc-block-checkout__order-notes) > .wc-block-components-checkout-step__content > :not(.wc-block-components-checkout-step__description),
+  .gr-co.gr-co.gr-co .wc-block-checkout__order-notes,
+  .gr-co.gr-co.gr-co .wc-block-checkout__terms,
+  .gr-co.gr-co.gr-co .wc-block-checkout__actions {
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-checkout__order-notes {
+    padding: 10px 0 32px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-checkout__terms {
+    padding-top: 28px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-checkout__actions {
+    padding-top: 18px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-address-form,
+  .gr-co.gr-co.gr-co .wc-block-components-radio-control {
+    gap: 12px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-address-form > :is(.wc-block-components-address-form__first_name, .wc-block-components-address-form__last_name, .wc-block-components-address-form__city, .wc-block-components-address-form__state, .wc-block-components-address-form__postcode, .wc-block-components-address-form__phone) {
+    flex-basis: calc(50% - 6px);
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-text-input,
+  .gr-co.gr-co.gr-co .wc-blocks-components-select__container {
+    gap: 4px;
+    padding: 12px 16px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-blocks-components-select__container::after {
+    right: 16px;
+    bottom: 18px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-text-input.has-error {
+    margin-bottom: 26px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-radio-control__option {
+    padding: 16px 16px 16px 52px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-radio-control .wc-block-components-radio-control__input {
+    left: 16px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-radio-control .wc-block-components-radio-control__input:checked::before {
+    width: 10px;
+    height: 10px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-radio-control-accordion-content {
+    padding: 0 16px 16px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-checkout__no-payment-methods-notice {
+    gap: 14px;
+    padding: 18px 20px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-checkbox .wc-block-components-checkbox__input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-checkbox .wc-block-components-checkbox__mark {
+    left: 4px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-textarea {
+    padding: 12px 16px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button {
+    padding: 20px 22px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-totals-coupon {
+    padding: 0 20px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-totals-coupon .wc-block-components-panel__button.wc-block-components-panel__button {
+    padding: 18px 0;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-checkout-order-summary__title,
+  .gr-co.gr-co.gr-co .wp-block-woocommerce-checkout-order-summary-totals-block,
+  .gr-co.gr-co.gr-co .wc-block-components-totals-footer-item {
+    padding: 18px 20px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-order-summary {
+    padding: 0 20px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-totals-coupon .wc-block-components-panel__content {
+    padding: 0 0 18px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-checkout-order-summary__title-text {
+    font-size: 26px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-order-summary-item {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    gap: 16px;
+    padding: 18px 0;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-order-summary-item__image {
+    width: 64px;
+    height: 64px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-order-summary-item__quantity {
+    top: -10px;
+    right: -10px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-totals-footer-item .wc-block-components-totals-item__value {
+    font-size: 44px;
+  }
+}
+
+@media (max-width: 599.98px) {
+  .gr-co.gr-co.gr-co .wc-block-components-order-summary-item {
+    grid-template-columns: 64px minmax(0, 1fr);
+    row-gap: 8px;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-order-summary-item__image {
+    grid-row: span 2;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-order-summary-item__total-price {
+    grid-column: 2;
+  }
+
+  .gr-co.gr-co.gr-co .wc-block-components-address-form > :is(.wc-block-components-address-form__first_name, .wc-block-components-address-form__last_name, .wc-block-components-address-form__city, .wc-block-components-address-form__state, .wc-block-components-address-form__postcode, .wc-block-components-address-form__phone) {
+    flex-basis: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gr-co.gr-co.gr-co .wc-block-components-checkout-place-order-button:has(.wc-block-components-spinner)::after {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* 08. Order received (the checkout's "Thank you" in the HTML: original/checkout.html .ok) and account */
+.gr-ok.gr-woo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(820 * var(--u));
+  column-gap: calc(110 * var(--u));
+  align-items: start;
+  max-width: none;
+  padding: calc(60 * var(--u)) var(--gut) calc(120 * var(--u));
+}
+
+.gr-ok.gr-woo > * {
+  max-width: none;
+  margin: 0;
+}
+
+.gr-ok.gr-ok .gr-ok__main {
+  display: flex;
+  flex-direction: column;
+  gap: calc(50 * var(--u));
+  min-width: 0;
+  padding: calc(70 * var(--u)) 0;
+  border-top: 1px solid var(--line2);
+}
+
+.gr-ok.gr-ok .gr-ok__main > * {
+  margin: 0;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-status {
+  display: flex;
+  flex-direction: column;
+  gap: calc(40 * var(--u));
+  margin: 0;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-status h1 {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: calc(150 * var(--u));
+  font-weight: 700;
+  letter-spacing: -.06em;
+  line-height: .86;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-status p {
+  max-width: calc(1100 * var(--u));
+  margin: 0;
+  color: var(--mute);
+  font-size: max(16px, calc(30 * var(--u)));
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* the order's number, date, total, e-mail and payment: one mono line of facts */
+.gr-ok.gr-ok .wc-block-order-confirmation-summary-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(20 * var(--u)) calc(60 * var(--u));
+  margin: 0;
+  padding: calc(30 * var(--u)) 0;
+  border-block: 1px solid var(--line2);
+  list-style: none;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-summary-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--u));
+  margin: 0;
+  font-size: max(15px, calc(24 * var(--u)));
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-summary-list-item__key {
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+  font-weight: 400;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+/* WooCommerce's headings here carry an inline font size (style="font-size:24px"): only !important sets the design's.
+   Downloads: a row per file, the button outlined, inverted on hover. */
+.gr-ok.gr-ok :is(.wc-block-order-confirmation-downloads-wrapper, .wc-block-order-confirmation-billing-wrapper, .wc-block-order-confirmation-shipping-wrapper, .wc-block-order-confirmation-additional-fields-wrapper) > .wp-block-heading,
+.gr-ok.gr-ok .gr-ok__side .wp-block-heading {
+  margin: 0 0 calc(20 * var(--u));
+  font-size: max(18px, calc(34 * var(--u))) !important;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-downloads table {
+  width: 100%;
+  border: 0;
+  border-collapse: collapse;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-downloads :is(th, td) {
+  padding: calc(30 * var(--u)) calc(20 * var(--u)) calc(30 * var(--u)) 0;
+  border: 0;
+  border-bottom: 1px solid var(--line2);
+  text-align: left;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-downloads th {
+  padding-block: calc(14 * var(--u));
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-downloads td {
+  font-size: max(15px, calc(24 * var(--u)));
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-downloads .download-product a {
+  color: var(--fg);
+  font-size: max(18px, calc(34 * var(--u)));
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-downloads .download-file a,
+.gr-ok.gr-ok .wc-block-order-confirmation-downloads a.woocommerce-MyAccount-downloads-file {
+  display: inline-block;
+  padding: calc(20 * var(--u)) calc(30 * var(--u));
+  border: 1.5px solid var(--fg);
+  background: none;
+  color: var(--fg);
+  font: 700 max(14px, calc(22 * var(--u))) / 1.36 var(--sans);
+  text-decoration: none;
+  transition: background-color .2s, color .2s;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-downloads .download-file a:is(:hover, :focus-visible) {
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-address-wrapper {
+  gap: calc(40 * var(--u));
+  margin: 0;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-address-wrapper:not(:has(address)) {
+  display: none;
+}
+
+.gr-ok.gr-ok :is(.wc-block-order-confirmation-billing-address, .wc-block-order-confirmation-shipping-address) {
+  padding: calc(28 * var(--u));
+  border: 1.5px solid var(--line2);
+  border-radius: 0;
+  background: var(--ph-bg);
+  font-size: max(15px, calc(24 * var(--u)));
+  font-style: normal;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-additional-information:empty {
+  display: none;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-additional-information {
+  color: var(--mute);
+  font-size: max(14px, calc(22 * var(--u)));
+}
+
+.gr-ok.gr-ok .gr-ok__btns {
+  gap: calc(20 * var(--u));
+}
+
+.gr-ok.gr-ok .gr-ok__btn .wp-block-button__link {
+  padding: calc(26 * var(--u)) calc(40 * var(--u));
+  border: 1.5px solid var(--inv-bg);
+  border-radius: 0;
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+  font-size: max(15px, calc(24 * var(--u)));
+  font-weight: 700;
+}
+
+.gr-ok.gr-ok .gr-ok__btn--line .wp-block-button__link {
+  border-color: var(--line2);
+  background: transparent;
+  color: var(--fg);
+}
+
+.gr-ok.gr-ok .gr-ok__btn .wp-block-button__link:is(:hover, :focus-visible) {
+  opacity: .9;
+}
+
+/* the order, as the checkout's summary showed it: a framed receipt, the total large */
+.gr-ok.gr-ok .gr-ok__side {
+  position: sticky;
+  top: calc(40 * var(--u));
+  margin-top: calc(70 * var(--u));
+  border: 1.5px solid var(--line2);
+  background: var(--ph-bg);
+}
+
+.gr-ok.gr-ok .gr-ok__side .wc-block-order-confirmation-totals-wrapper > .wp-block-heading {
+  margin: 0;
+  padding: calc(40 * var(--u)) calc(44 * var(--u));
+  border-bottom: 1px solid var(--line2);
+  font-size: calc(44 * var(--u)) !important;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals {
+  margin: 0;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals table {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-collapse: collapse;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals thead {
+  display: none;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals :is(th, td) {
+  padding: calc(32 * var(--u)) 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  font-size: max(15px, calc(24 * var(--u)));
+  text-align: left;
+  vertical-align: top;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals :is(th, td):first-child {
+  padding-left: calc(44 * var(--u));
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals :is(th, td):last-child {
+  padding-right: calc(44 * var(--u));
+  text-align: right;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals tbody td {
+  font-size: max(16px, calc(28 * var(--u)));
+  font-weight: 600;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals__product a {
+  color: var(--fg);
+  font-size: max(17px, calc(30 * var(--u)));
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals .product-quantity {
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+  font-weight: 400;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals .wc-item-meta {
+  margin: calc(10 * var(--u)) 0 0;
+  padding: 0;
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: max(11px, calc(15 * var(--u)));
+  letter-spacing: .1em;
+  list-style: none;
+  text-transform: uppercase;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals .wc-item-meta p {
+  display: inline;
+  margin: 0;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals tfoot :is(th, td) {
+  color: var(--mute);
+  font-weight: 400;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals tfoot tr:last-child :is(th, td) {
+  padding-block: calc(36 * var(--u));
+  border-bottom: 0;
+  vertical-align: baseline;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals tfoot tr:last-child th {
+  font-family: var(--mono);
+  font-size: max(11px, calc(18 * var(--u)));
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.gr-ok.gr-ok .wc-block-order-confirmation-totals tfoot tr:last-child td {
+  color: var(--fg);
+  font-size: calc(84 * var(--u));
+  font-weight: 800;
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+
+@media (max-width: 1199.98px) {
+  .gr-ok.gr-woo {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 28px;
+  }
+
+  .gr-ok.gr-ok .gr-ok__main {
+    gap: 24px;
+    padding: 32px 0;
+  }
+
+  .gr-ok.gr-ok .gr-ok__side {
+    position: static;
+    margin-top: 0;
+  }
+
+  .gr-ok.gr-ok .wc-block-order-confirmation-status h1 {
+    font-size: 72px;
+  }
+
+  .gr-ok.gr-ok .gr-ok__side .wc-block-order-confirmation-totals-wrapper > .wp-block-heading {
+    padding: 18px 20px;
+    font-size: 26px !important;
+  }
+
+  .gr-ok.gr-ok .wc-block-order-confirmation-totals :is(th, td) {
+    padding-block: 18px;
+  }
+
+  .gr-ok.gr-ok .wc-block-order-confirmation-totals :is(th, td):first-child {
+    padding-left: 20px;
+  }
+
+  .gr-ok.gr-ok .wc-block-order-confirmation-totals :is(th, td):last-child {
+    padding-right: 20px;
+  }
+
+  .gr-ok.gr-ok .wc-block-order-confirmation-totals tfoot tr:last-child td {
+    font-size: 44px;
+  }
+
+  .gr-ok.gr-ok .gr-ok__btn .wp-block-button__link {
+    padding: 16px 22px;
+  }
+}
+
+@media (max-width: 599.98px) {
+  .gr-ok.gr-ok .wc-block-order-confirmation-status h1 {
+    font-size: 56px;
+  }
+}
+
+.gr-woo .woocommerce-MyAccount-navigation ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4em 1.6em;
+  margin: 0 0 2em;
+  padding: 0;
+  list-style: none;
+  font-family: var(--mono);
+  text-transform: uppercase;
+}
+
+.gr-woo .woocommerce-MyAccount-navigation a {
+  color: var(--mute);
+  text-decoration: none;
+}
+
+.gr-woo .woocommerce-MyAccount-navigation .is-active a {
+  color: var(--fg);
+}
+
+/* 09. Width: the shop's pages use the whole frame of the design, up to a comfortable line */
+.gr-woo > * {
+  max-width: 1680px;
+  margin-inline: auto;
+}
+
+.gr-woo > .wp-block-post-content > * {
+  max-width: none;
+}
+
