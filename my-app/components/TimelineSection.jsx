@@ -58,25 +58,25 @@ const allTeamRoles = [
 const totalWeeks = 12;
 
 export default function TimelineSection() {
-  // Current playhead week: 1 to 12
+  // Current playhead week: 1 to 12 (starts in auto-play mode)
   const [currentWeek, setCurrentWeek] = useState(1);
   const [currentDay, setCurrentDay] = useState(2);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true); // Auto-play enabled by default!
   const [isDragging, setIsDragging] = useState(false);
   const gridTrackRef = useRef(null);
 
-  // Auto-play timer
+  // Auto-play timer: advances smoothly across the 12 weeks
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || isDragging) return;
     const interval = setInterval(() => {
       setCurrentWeek((prevW) => {
         if (prevW >= 12) return 1;
         return prevW + 1;
       });
-      setCurrentDay(Math.floor(Math.random() * 5) + 1);
-    }, 2000);
+      setCurrentDay((prevD) => (prevD >= 5 ? 1 : prevD + 1));
+    }, 1800);
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, isDragging]);
 
   // Determine current active phase based on week
   const activePhase = timelinePhases.find((p) => currentWeek >= p.startWeek && currentWeek <= p.endWeek) || timelinePhases[0];

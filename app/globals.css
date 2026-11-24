@@ -1525,10 +1525,10 @@ body {
   bottom: 0;
   width: 1px;
   background: #ffffff;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
   z-index: 30;
   pointer-events: none;
-  transition: left 0.15s ease-out;
+  transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .timeline-playhead-badge {
