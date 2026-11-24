@@ -168,13 +168,6 @@ export default function StatsSection() {
               </div>
             );
           })}
-
-          {/* Bottom Right Corner Up Arrow Button */}
-          <a href="#numbers" className="stats-scroll-btn" aria-label="Top of numbers">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 19V5M5 12l7-7 7 7"/>
-            </svg>
-          </a>
         </div>
       </div>
     </section>

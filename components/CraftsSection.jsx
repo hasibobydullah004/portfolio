@@ -93,7 +93,7 @@ export default function CraftsSection() {
           </div>
         </div>
 
-        {/* Accordion Stage Box (1:1 Split 2-Column Active & Sleek Vertical Strips) */}
+        {/* Accordion Stage Box (Continuous Smooth Animation & 100% Fit) */}
         <div 
           className="crafts-stage-box"
           onMouseEnter={() => setIsCraftHovered(true)}
@@ -102,12 +102,27 @@ export default function CraftsSection() {
           {craftsData.map((craft) => {
             const isActive = activeCraft === craft.id;
 
-            if (isActive) {
-              return (
-                <div
-                  key={craft.id}
-                  className="craft-stage-pane craft-stage-pane--active"
-                >
+            return (
+              <div
+                key={craft.id}
+                className={`craft-stage-pane ${isActive ? 'is-active' : 'is-collapsed'}`}
+                onMouseEnter={() => setActiveCraft(craft.id)}
+                onClick={() => setActiveCraft(craft.id)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') setActiveCraft(craft.id);
+                }}
+              >
+                {/* Collapsed View (Smooth fade-out when active) */}
+                <div className="craft-collapsed-view">
+                  <span className="strip-number">{craft.num}</span>
+                  <span className="strip-title-vertical">{craft.title}</span>
+                  <div className="strip-plus-btn">+</div>
+                </div>
+
+                {/* Expanded View (Smooth glide & fade-in when active) */}
+                <div className="craft-expanded-view">
                   {/* Left Side: Information Pane */}
                   <div className="craft-info-pane">
                     <div className="craft-info-top">
@@ -145,35 +160,9 @@ export default function CraftsSection() {
                     </a>
                   </div>
                 </div>
-              );
-            }
-
-            {/* Collapsed Vertical Card Strip */}
-            return (
-              <div
-                key={craft.id}
-                className="craft-stage-pane craft-stage-pane--collapsed"
-                onMouseEnter={() => setActiveCraft(craft.id)}
-                onClick={() => setActiveCraft(craft.id)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') setActiveCraft(craft.id);
-                }}
-              >
-                <span className="strip-number">{craft.num}</span>
-                <span className="strip-title-vertical">{craft.title}</span>
-                <div className="strip-plus-btn">+</div>
               </div>
             );
           })}
-
-          {/* Bottom Right Corner Up Arrow Button */}
-          <a href="#services" className="crafts-corner-scroll-btn" aria-label="Top of crafts">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 19V5M5 12l7-7 7 7"/>
-            </svg>
-          </a>
         </div>
       </div>
     </section>
