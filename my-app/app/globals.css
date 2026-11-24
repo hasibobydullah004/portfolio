@@ -467,194 +467,246 @@ body {
 }
 
 /* ==========================================================================
-   SECTION 1: ARCHITECTURAL STATS WITH COLORFUL INVERSION HOVER
+   SECTION 1: ARCHITECTURAL STATS (EXACT SPEC MATCH)
    ========================================================================== */
-.arch-stats-wrapper {
-  background: #141a22;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+.nm-exact-title {
+  font-family: var(--font-sans);
+  font-size: clamp(2.8rem, 5vw, 4.4rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
-.arch-ruler-bar {
+.nm-exact-title .italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.arch-ruler-track {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.arch-ruler-labels {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  background: #10141a;
-  border-bottom: 1px solid var(--border-ruler);
-  position: relative;
+  padding: 0 4px;
+  margin-bottom: 4px;
 }
 
-.ruler-segment {
-  padding: 0.65rem 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-right: 1px solid var(--border-ruler);
-  position: relative;
+.ruler-axis-letter {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--text-muted);
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  transition: all 0.25s ease;
 }
 
-.ruler-segment:last-child {
-  border-right: none;
+.arch-ruler-line {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-.ruler-ticks {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 6px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 0.5rem;
-  pointer-events: none;
+.arch-ruler-ticks {
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.22) 0px,
+    rgba(255, 255, 255, 0.22) 1px,
+    transparent 1px,
+    transparent 14px
+  );
 }
 
-.ruler-tick {
-  width: 1px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.ruler-tick.major {
-  height: 6px;
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.arch-columns-grid {
+.arch-stats-box {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  background: #141a22;
+  background: #14171d;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: none;
 }
 
 .arch-col {
-  padding: 3rem 2rem 2.5rem;
-  border-right: 1px solid var(--border-subtle);
-  cursor: pointer;
   position: relative;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  background-color: transparent;
+  padding: 2.25rem 2rem 2.25rem 2rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.16);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 250px;
+  min-height: 380px;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.25s ease;
 }
 
 .arch-col:last-child {
   border-right: none;
 }
 
-.arch-col-val {
-  font-family: var(--font-serif);
-  font-size: clamp(3.2rem, 4.8vw, 4.5rem);
-  font-weight: 400;
-  line-height: 1;
-  color: var(--text-primary);
-  margin-bottom: 0.85rem;
-  letter-spacing: -0.02em;
-  transition: color 0.25s ease, transform 0.25s ease;
+.arch-col-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+  transition: color 0.25s ease;
 }
 
-.arch-col-val .symbol {
-  font-weight: 300;
+.arch-col-coord {
+  font-weight: 500;
+}
+
+.arch-col-cat {
+  font-weight: 500;
+}
+
+.arch-col-middle {
+  margin: 2.5rem 0 1.5rem 0;
+}
+
+.arch-col-val {
+  display: flex;
+  align-items: baseline;
   font-family: var(--font-sans);
-  font-size: 0.75em;
+  font-size: clamp(4.5rem, 6.2vw, 6.8rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  transition: color 0.25s ease;
+}
+
+.val-digits {
+  font-family: inherit;
+  font-weight: inherit;
+}
+
+.val-sym {
+  display: inline-block;
+  line-height: 1;
+}
+
+.val-sym--plus {
+  font-family: var(--font-sans);
+  font-size: 0.55em;
+  font-weight: 300;
+  margin-left: 0.3rem;
+  transform: translateY(-0.15em);
+}
+
+.val-sym--italic-y {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.72em;
   margin-left: 0.15rem;
 }
 
-/* Progress bar inside number cell */
+.val-sym--percent {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 0.65em;
+  margin-left: 0.2rem;
+}
+
 .nm-track-bar {
   width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 2px;
+  max-width: 180px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.14);
+  position: relative;
   overflow: hidden;
-  margin-bottom: 1rem;
+  transition: background-color 0.25s ease;
 }
 
 .nm-track-fill {
   height: 100%;
-  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.85);
   transition: width 0.4s ease, background-color 0.25s ease;
 }
 
-.arch-col-desc {
+.arch-col-bottom {
+  font-family: var(--font-sans);
   font-size: 0.95rem;
-  color: var(--text-muted);
-  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.65);
   font-weight: 400;
+  letter-spacing: 0.01em;
   transition: color 0.25s ease;
 }
 
-.arch-col-color-indicator {
-  position: absolute;
-  top: 1.25rem;
-  right: 1.25rem;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  opacity: 0.8;
-  transition: transform 0.25s ease, opacity 0.25s ease;
-}
-
 /* ==========================================================================
-   COLORFUL INVERSION HOVER EFFECT (Matching Video + First Image Palette)
+   ACTIVE & HOVER INVERSION (Matching Exactly Screenshot Column 1)
    ========================================================================== */
-.arch-col:hover,
-.arch-col.is-active {
-  background-color: var(--col-bg-hover) !important;
-  border-color: var(--col-border-hover) !important;
-  transform: translateY(-2px);
-  z-index: 5;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+.arch-col.is-active,
+.arch-col:hover {
+  background-color: #d6d8db !important;
 }
 
-.arch-col:hover .arch-col-val,
-.arch-col.is-active .arch-col-val {
-  color: var(--col-text-hover) !important;
-  transform: translateX(4px);
+.arch-col.is-active .arch-col-top,
+.arch-col:hover .arch-col-top {
+  color: rgba(20, 24, 28, 0.55) !important;
 }
 
-.arch-col:hover .arch-col-desc,
-.arch-col.is-active .arch-col-desc {
-  color: var(--col-sub-hover) !important;
-  font-weight: 500;
+.arch-col.is-active .arch-col-val,
+.arch-col:hover .arch-col-val {
+  color: #12151b !important;
 }
 
-.arch-col:hover .arch-col-color-indicator,
-.arch-col.is-active .arch-col-color-indicator {
-  transform: scale(1.5);
-  opacity: 1;
+.arch-col.is-active .nm-track-bar,
+.arch-col:hover .nm-track-bar {
+  background: rgba(18, 21, 27, 0.15) !important;
 }
 
-.arch-bottom-bar {
+.arch-col.is-active .nm-track-fill,
+.arch-col:hover .nm-track-fill {
+  background: #12151b !important;
+}
+
+.arch-col.is-active .arch-col-bottom,
+.arch-col:hover .arch-col-bottom {
+  color: #12151b !important;
+  font-weight: 450;
+}
+
+/* Corner Scroll Button */
+.stats-scroll-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 34px;
+  height: 34px;
+  background: #ffffff;
+  color: #12151b;
   display: flex;
-  justify-content: flex-end;
-  padding: 0.65rem 1.5rem;
-  background: #10141a;
-  border-top: 1px solid var(--border-subtle);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.arch-bottom-btn {
-  display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: color 0.2s;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  border-top-left-radius: 0;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.arch-bottom-btn:hover {
-  color: var(--accent-gold);
+.stats-scroll-btn:hover {
+  background: #e2e4e8;
+  transform: translateY(-1px);
 }
 
 /* ==========================================================================
@@ -1600,14 +1652,17 @@ body {
   .nav-links-center {
     display: none;
   }
-  .arch-columns-grid {
+  .arch-stats-box {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .arch-ruler-labels {
     grid-template-columns: repeat(2, 1fr);
   }
   .arch-col:nth-child(2) {
     border-right: none;
   }
   .arch-col:nth-child(1), .arch-col:nth-child(2) {
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
   }
   .work-arch-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1657,15 +1712,16 @@ body {
 }
 
 @media (max-width: 580px) {
-  .arch-ruler-bar {
-    grid-template-columns: repeat(2, 1fr);
+  .arch-stats-box {
+    grid-template-columns: 1fr;
   }
-  .arch-columns-grid {
+  .arch-ruler-labels {
     grid-template-columns: 1fr;
   }
   .arch-col {
     border-right: none;
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    min-height: 290px;
   }
   .work-arch-grid {
     grid-template-columns: 1fr;

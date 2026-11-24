@@ -9,56 +9,44 @@ import { useState, useEffect } from 'react';
 // 1. Twelve Years, in Numbers
 const numbersData = [
   {
+    letter: 'A',
     code: 'A1',
     category: 'PROJECTS',
     value: '240',
     symbol: '+',
+    symbolType: 'plus',
     label: 'Websites shipped',
-    bar: '80%',
-    accent: '#6e8677',
-    bgHover: '#edf4f0',
-    borderHover: '#a3c2af',
-    textHover: '#0f1812',
-    subHover: '#334a3b',
+    bar: '75%',
   },
   {
+    letter: 'B',
     code: 'B1',
     category: 'TIME',
     value: '12',
     symbol: 'y',
+    symbolType: 'italic-y',
     label: 'Years in practice',
     bar: '48%',
-    accent: '#7e5267',
-    bgHover: '#f7edf2',
-    borderHover: '#cf9db4',
-    textHover: '#1c1016',
-    subHover: '#523041',
   },
   {
+    letter: 'C',
     code: 'C1',
     category: 'REACH',
     value: '38',
     symbol: '',
+    symbolType: 'none',
     label: 'Countries served',
     bar: '62%',
-    accent: '#b5843a',
-    bgHover: '#fbf3e6',
-    borderHover: '#e6be83',
-    textHover: '#1c140a',
-    subHover: '#573d19',
   },
   {
+    letter: 'D',
     code: 'D1',
     category: 'LOYALTY',
     value: '98',
     symbol: '%',
+    symbolType: 'percent',
     label: 'Clients who return',
     bar: '98%',
-    accent: '#ab5b4d',
-    bgHover: '#faece9',
-    borderHover: '#e49f93',
-    textHover: '#1c0f0d',
-    subHover: '#572b24',
   },
 ];
 
@@ -477,106 +465,75 @@ export default function HomePage() {
         <section className="sec nm alignfull" id="numbers" aria-labelledby="nm-title-2">
           <div className="container">
             <div className="nm__head">
-              <h2 className="section-title" id="nm-title-2">
+              <h2 className="nm-exact-title" id="nm-title-2">
                 Twelve years, <span className="italic">in numbers.</span>
               </h2>
             </div>
 
-            <div className="arch-stats-wrapper">
-              {/* Ticker Ruler Bar */}
-              <div className="arch-ruler-bar" aria-hidden="true">
-                {numbersData.map((item, idx) => {
-                  const isActive = activeNumber === idx;
-                  return (
-                    <div
-                      key={item.code}
-                      className="ruler-segment"
-                      style={{
-                        color: isActive ? item.accent : 'var(--text-muted)',
-                        borderBottom: isActive ? `2px solid ${item.accent}` : 'none',
-                        fontWeight: isActive ? 600 : 400,
-                      }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                        <span
-                          style={{
-                            display: 'inline-block',
-                            width: '6px',
-                            height: '6px',
-                            borderRadius: '50%',
-                            backgroundColor: item.accent,
-                            boxShadow: isActive ? `0 0 8px ${item.accent}` : 'none',
-                          }}
+            {/* Architectural Ruler Bar with Coordinate Letters and Precise Ticks */}
+            <div className="arch-ruler-track" aria-hidden="true">
+              <div className="arch-ruler-labels">
+                <span className="ruler-axis-letter">A</span>
+                <span className="ruler-axis-letter">B</span>
+                <span className="ruler-axis-letter">C</span>
+                <span className="ruler-axis-letter">D</span>
+              </div>
+              <div className="arch-ruler-line">
+                <div className="arch-ruler-ticks" />
+              </div>
+            </div>
+
+            {/* 4 Architectural Columns Box with Exact Spec Match */}
+            <div className="arch-stats-box">
+              {numbersData.map((item, index) => {
+                const isActive = activeNumber === index;
+                return (
+                  <div
+                    key={item.code}
+                    className={`arch-col ${isActive ? 'is-active' : ''}`}
+                    onMouseEnter={() => setActiveNumber(index)}
+                    onFocus={() => setActiveNumber(index)}
+                    tabIndex={0}
+                  >
+                    {/* Top Row: Coordinates & Category */}
+                    <div className="arch-col-top">
+                      <span className="arch-col-coord">{item.code}</span>
+                      <span className="arch-col-cat">{item.category}</span>
+                    </div>
+
+                    {/* Middle: Giant Stat & Underline Progress Track */}
+                    <div className="arch-col-middle">
+                      <div className="arch-col-val">
+                        <span className="val-digits">{item.value}</span>
+                        {item.symbol && (
+                          <span className={`val-sym val-sym--${item.symbolType}`}>
+                            {item.symbol}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="nm-track-bar" aria-hidden="true">
+                        <div
+                          className="nm-track-fill"
+                          style={{ width: item.bar }}
                         />
-                        <span>{item.code}</span>
-                      </div>
-                      <span>{item.category}</span>
-                      <div className="ruler-ticks">
-                        <span className="ruler-tick major" />
-                        <span className="ruler-tick" />
-                        <span className="ruler-tick" />
-                        <span className="ruler-tick" />
-                        <span className="ruler-tick major" />
                       </div>
                     </div>
-                  );
-                })}
-              </div>
 
-              {/* 4 Interactive Columns */}
-              <div className="arch-columns-grid">
-                {numbersData.map((item, index) => {
-                  const isActive = activeNumber === index;
-                  return (
-                    <div
-                      key={item.code}
-                      className={`arch-col ${isActive ? 'is-active' : ''}`}
-                      onMouseEnter={() => setActiveNumber(index)}
-                      tabIndex={0}
-                      onFocus={() => setActiveNumber(index)}
-                      style={{
-                        '--col-accent': item.accent,
-                        '--col-bg-hover': item.bgHover,
-                        '--col-border-hover': item.borderHover,
-                        '--col-text-hover': item.textHover,
-                        '--col-sub-hover': item.subHover,
-                      }}
-                    >
-                      <div
-                        className="arch-col-color-indicator"
-                        style={{ backgroundColor: item.accent, boxShadow: `0 0 10px ${item.accent}` }}
-                      />
-
-                      <div>
-                        <div className="arch-col-val">
-                          {item.value}
-                          <span className="symbol">{item.symbol}</span>
-                        </div>
-
-                        {/* Progress Bar Track */}
-                        <div className="nm-track-bar" aria-hidden="true">
-                          <div
-                            className="nm-track-fill"
-                            style={{
-                              width: item.bar,
-                              backgroundColor: isActive ? item.accent : 'rgba(255,255,255,0.2)',
-                            }}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="arch-col-desc">{item.label}</div>
+                    {/* Bottom: Descriptor Label */}
+                    <div className="arch-col-bottom">
+                      <span className="arch-col-desc">{item.label}</span>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                );
+              })}
 
-              <div className="arch-bottom-bar">
-                <span className="arch-bottom-btn">
-                  <span>EXPLORE ARCHIVE</span>
-                  <span>[ + ]</span>
-                </span>
-              </div>
+              {/* Bottom Right Corner Up Arrow Button */}
+              <a href="#numbers" className="stats-scroll-btn" aria-label="Top of numbers">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+              </a>
             </div>
           </div>
         </section>
