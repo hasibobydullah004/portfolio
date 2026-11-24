@@ -534,23 +534,26 @@ body {
   position: relative;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  background: #14171d;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #12151b;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-top: none;
 }
 
 .arch-col {
   position: relative;
-  padding: 2.25rem 2rem 2.25rem 2rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 2.5rem 2.25rem 2.5rem 2.25rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 380px;
   cursor: pointer;
   background-color: transparent;
-  transition: background-color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              color 0.25s ease;
+  transition: background-color 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.45s ease;
+  will-change: background-color, transform, box-shadow;
 }
 
 .arch-col:last-child {
@@ -566,7 +569,7 @@ body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.42);
-  transition: color 0.25s ease;
+  transition: color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .arch-col-coord {
@@ -578,25 +581,29 @@ body {
 }
 
 .arch-col-middle {
-  margin: 2.5rem 0 1.5rem 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 2rem 0 1.25rem 0;
+  width: fit-content;
 }
 
 .arch-col-val {
   display: flex;
   align-items: baseline;
-  font-family: var(--font-sans);
-  font-size: clamp(4.5rem, 6.2vw, 6.8rem);
-  font-weight: 700;
+  font-family: var(--font-serif);
+  font-size: clamp(4.4rem, 6.4vw, 7.2rem);
+  font-weight: 500;
   line-height: 0.95;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.015em;
   color: #ffffff;
-  margin-bottom: 1.5rem;
-  transition: color 0.25s ease;
+  margin-bottom: 1.25rem;
+  transition: color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .val-digits {
-  font-family: inherit;
-  font-weight: inherit;
+  font-family: var(--font-serif);
+  font-weight: 500;
 }
 
 .val-sym {
@@ -606,41 +613,40 @@ body {
 
 .val-sym--plus {
   font-family: var(--font-sans);
-  font-size: 0.55em;
+  font-size: 0.46em;
   font-weight: 300;
-  margin-left: 0.3rem;
-  transform: translateY(-0.15em);
+  margin-left: 0.25rem;
+  transform: translateY(-0.2em);
 }
 
 .val-sym--italic-y {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: 0.72em;
+  font-size: 0.65em;
   margin-left: 0.15rem;
 }
 
 .val-sym--percent {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: 0.65em;
-  margin-left: 0.2rem;
+  font-size: 0.58em;
+  margin-left: 0.15rem;
 }
 
 .nm-track-bar {
   width: 100%;
-  max-width: 180px;
   height: 2px;
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.16);
   position: relative;
   overflow: hidden;
-  transition: background-color 0.25s ease;
+  transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .nm-track-fill {
   height: 100%;
-  background: rgba(255, 255, 255, 0.85);
-  transition: width 0.4s ease, background-color 0.25s ease;
+  background: rgba(255, 255, 255, 0.88);
+  transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .arch-col-bottom {
@@ -649,20 +655,22 @@ body {
   color: rgba(255, 255, 255, 0.65);
   font-weight: 400;
   letter-spacing: 0.01em;
-  transition: color 0.25s ease;
+  transition: color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ==========================================================================
-   ACTIVE & HOVER INVERSION (Matching Exactly Screenshot Column 1)
+   ACTIVE & HOVER INVERSION (Silky Soft Transition)
    ========================================================================== */
 .arch-col.is-active,
 .arch-col:hover {
-  background-color: #d6d8db !important;
+  background-color: #d8dadc !important;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .arch-col.is-active .arch-col-top,
 .arch-col:hover .arch-col-top {
-  color: rgba(20, 24, 28, 0.55) !important;
+  color: rgba(18, 21, 27, 0.55) !important;
 }
 
 .arch-col.is-active .arch-col-val,

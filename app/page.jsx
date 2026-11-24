@@ -1,6 +1,38 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+function AnimatedStatNumber({ value, shouldAnimate, duration = 1800 }) {
+  const numericTarget = parseInt(value, 10);
+  const [currentVal, setCurrentVal] = useState(0);
+
+  useEffect(() => {
+    if (!shouldAnimate || isNaN(numericTarget)) {
+      setCurrentVal(numericTarget || value);
+      return;
+    }
+
+    let start = null;
+    let animId;
+
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      setCurrentVal(Math.round(ease * numericTarget));
+
+      if (progress < 1) {
+        animId = requestAnimationFrame(step);
+      }
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [numericTarget, value, shouldAnimate, duration]);
+
+  return <>{currentVal}</>;
+}
 
 // ============================================================================
 // DATA DEFINITIONS & COLOR PALETTES
@@ -303,6 +335,26 @@ const monthsData = [
 export default function HomePage() {
   // Client States
   const [activeNumber, setActiveNumber] = useState(0);
+  const [statsAnimated, setStatsAnimated] = useState(false);
+  const statsSectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStatsAnimated(true);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (statsSectionRef.current) {
+      observer.observe(statsSectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const [activeCraft, setActiveCraft] = useState('sv-1');
   const [isCraftHovered, setIsCraftHovered] = useState(false);
 
@@ -462,7 +514,7 @@ export default function HomePage() {
         {/* =================================================================
             2. SECTION: TWELVE YEARS, IN NUMBERS (COLORFUL HOVER INVERSION)
             ================================================================= */}
-        <section className="sec nm alignfull" id="numbers" aria-labelledby="nm-title-2">
+        <section className="sec nm alignfull" id="numbers" aria-labelledby="nm-title-2" ref={statsSectionRef}>
           <div className="container">
             <div className="nm__head">
               <h2 className="nm-exact-title" id="nm-title-2">
@@ -483,7 +535,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* 4 Architectural Columns Box with Exact Spec Match */}
+            {/* 4 Architectural Columns Box with Exact Spec Match & Soft Hover */}
             <div className="arch-stats-box">
               {numbersData.map((item, index) => {
                 const isActive = activeNumber === index;
@@ -504,7 +556,9 @@ export default function HomePage() {
                     {/* Middle: Giant Stat & Underline Progress Track */}
                     <div className="arch-col-middle">
                       <div className="arch-col-val">
-                        <span className="val-digits">{item.value}</span>
+                        <span className="val-digits">
+                          <AnimatedStatNumber value={item.value} shouldAnimate={statsAnimated} />
+                        </span>
                         {item.symbol && (
                           <span className={`val-sym val-sym--${item.symbolType}`}>
                             {item.symbol}
@@ -515,7 +569,7 @@ export default function HomePage() {
                       <div className="nm-track-bar" aria-hidden="true">
                         <div
                           className="nm-track-fill"
-                          style={{ width: item.bar }}
+                          style={{ width: statsAnimated ? item.bar : '0%' }}
                         />
                       </div>
                     </div>

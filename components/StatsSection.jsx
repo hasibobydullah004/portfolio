@@ -1,6 +1,39 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+function AnimatedStatNumber({ value, shouldAnimate, duration = 1800 }) {
+  const numericTarget = parseInt(value, 10);
+  const [currentVal, setCurrentVal] = useState(0);
+
+  useEffect(() => {
+    if (!shouldAnimate || isNaN(numericTarget)) {
+      setCurrentVal(numericTarget || value);
+      return;
+    }
+
+    let start = null;
+    let animId;
+
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Gentle cubic-bezier ease out
+      const ease = 1 - Math.pow(1 - progress, 3);
+      setCurrentVal(Math.round(ease * numericTarget));
+
+      if (progress < 1) {
+        animId = requestAnimationFrame(step);
+      }
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [numericTarget, value, shouldAnimate, duration]);
+
+  return <>{currentVal}</>;
+}
 
 const statsData = [
   {
@@ -47,9 +80,28 @@ const statsData = [
 
 export default function StatsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [statsAnimated, setStatsAnimated] = useState(false);
+  const statsSectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStatsAnimated(true);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (statsSectionRef.current) {
+      observer.observe(statsSectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="sec nm alignfull" id="numbers" aria-labelledby="nm-title-2">
+    <section className="sec nm alignfull" id="numbers" aria-labelledby="nm-title-2" ref={statsSectionRef}>
       <div className="container">
         <div className="nm__head">
           <h2 className="nm-exact-title" id="nm-title-2">
@@ -70,7 +122,7 @@ export default function StatsSection() {
           </div>
         </div>
 
-        {/* 4 Architectural Columns Box with Exact Spec Match */}
+        {/* 4 Architectural Columns Box with Exact Spec Match & Soft Hover */}
         <div className="arch-stats-box">
           {statsData.map((item, index) => {
             const isActive = activeIndex === index;
@@ -91,7 +143,9 @@ export default function StatsSection() {
                 {/* Middle: Giant Stat & Underline Progress Track */}
                 <div className="arch-col-middle">
                   <div className="arch-col-val">
-                    <span className="val-digits">{item.value}</span>
+                    <span className="val-digits">
+                      <AnimatedStatNumber value={item.value} shouldAnimate={statsAnimated} />
+                    </span>
                     {item.symbol && (
                       <span className={`val-sym val-sym--${item.symbolType}`}>
                         {item.symbol}
@@ -102,7 +156,7 @@ export default function StatsSection() {
                   <div className="nm-track-bar" aria-hidden="true">
                     <div
                       className="nm-track-fill"
-                      style={{ width: item.bar }}
+                      style={{ width: statsAnimated ? item.bar : '0%' }}
                     />
                   </div>
                 </div>
