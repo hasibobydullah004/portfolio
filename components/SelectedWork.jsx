@@ -5,101 +5,83 @@ import { useState, useRef, useCallback } from 'react';
 const allProjects = [
   {
     id: 'p1',
-    colLetter: 'A',
-    rowNum: '1',
     coord: 'A1',
     year: '2026',
     name: 'Northwind Atelier',
     category: 'E-COMMERCE',
     tag: 'ecom',
-    metric: '+48%',
-    image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80', // dark fabric/coat over chair
+    metric: '',
+    image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'p2',
-    colLetter: 'B',
-    rowNum: '1',
     coord: 'B1',
     year: '2026',
     name: 'Halden Coffee',
     category: 'BRAND + WEB',
     tag: 'brand',
-    metric: '120k Packs',
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80', // coffee bag & cup on stone
+    metric: '×3',
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'p3',
-    colLetter: 'C',
-    rowNum: '1',
     coord: 'C1',
     year: '2025',
     name: 'Oslo Type Foundry',
     category: 'WEB',
     tag: 'web',
-    metric: 'Awwwards',
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80', // 3D architectural letters / typography
+    metric: '0.7s',
+    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'p4',
-    colLetter: 'D',
-    rowNum: '1',
-    coord: '01', // as shown in user's image media_1795519042478_556b4987.jpg: D1 active card shows 01 in top left!
-    origCoord: 'D1',
+    coord: 'D1',
     year: '2025',
     name: 'Mira Architects',
     category: 'WEB',
     tag: 'web',
-    metric: '+64%', // exact metric from user's image
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80', // brutalist architecture concrete & pool
+    metric: '+64%',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'p5',
-    colLetter: 'A',
-    rowNum: '2',
     coord: 'A2',
     year: '2025',
     name: 'Kova Skincare',
     category: 'E-COMMERCE',
     tag: 'ecom',
-    metric: '4.8% Conv',
-    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80', // skincare bottle and jar
+    metric: '4.8%',
+    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'p6',
-    colLetter: 'B',
-    rowNum: '2',
     coord: 'B2',
     year: '2024',
     name: 'Field Notes Radio',
     category: 'BRAND + WEB',
     tag: 'brand',
-    metric: 'Grammy Nom',
-    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80', // vinyl record & mic
+    metric: '120k',
+    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'p7',
-    colLetter: 'C',
-    rowNum: '2',
     coord: 'C2',
     year: '2024',
     name: 'Lumen Studio',
     category: 'WEB',
     tag: 'web',
-    metric: "Red Dot '24",
-    image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80', // glowing orb lamp & dark curved screen
+    metric: '98',
+    image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'p8',
-    colLetter: 'D',
-    rowNum: '2',
-    coord: '02',
-    origCoord: 'D2',
+    coord: 'D2',
     year: '2024',
     name: 'Atlas Bikes',
     category: 'E-COMMERCE',
     tag: 'ecom',
-    metric: '+84% Sales',
-    image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=800&q=80', // black minimalist bike against wall
+    metric: '',
+    image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=800&q=80',
   },
 ];
 
@@ -112,12 +94,12 @@ const filterTabs = [
 
 export default function SelectedWork() {
   const [activeFilter, setActiveFilter] = useState('all');
-  const [hoveredId, setHoveredId] = useState('p4'); // Mira Architects active by default as in user's image
+  const [hoveredId, setHoveredId] = useState(null);
 
   // Crosshair state
   const gridContainerRef = useRef(null);
   const [crosshairPos, setCrosshairPos] = useState({ x: -1000, y: -1000, visible: false });
-  const [coordDisplay, setCoordDisplay] = useState({ xStr: '2222', yStr: '0268' });
+  const [coordDisplay, setCoordDisplay] = useState({ xStr: '0000', yStr: '0000' });
 
   const handleMouseMove = useCallback((e) => {
     if (!gridContainerRef.current) return;
@@ -125,25 +107,20 @@ export default function SelectedWork() {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Check bounds
     if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
       setCrosshairPos({ x, y, visible: true });
 
-      // Generate realistic architectural CAD/drafting coordinates
-      // Map to 4-digit coordinate string (e.g., X 2222 · Y 0268)
-      const mappedX = Math.round(1000 + (x / rect.width) * 1500).toString().padStart(4, '0');
-      const mappedY = Math.round(100 + (y / rect.height) * 400).toString().padStart(4, '0');
-      setCoordDisplay({ xStr: mappedX, yStr: mappedY });
+      // Calculate actual client screen pixel coordinates as shown in recording
+      const xPixel = Math.round(e.clientX).toString().padStart(4, '0');
+      const yPixel = Math.round(e.clientY).toString().padStart(4, '0');
+      setCoordDisplay({ xStr: xPixel, yStr: yPixel });
     }
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     setCrosshairPos((prev) => ({ ...prev, visible: false }));
+    setHoveredId(null);
   }, []);
-
-  const filteredProjects = activeFilter === 'all'
-    ? allProjects
-    : allProjects.filter((p) => p.tag === activeFilter);
 
   return (
     <section className="sec wk alignfull" id="work" aria-labelledby="wk-title-main">
@@ -217,8 +194,8 @@ export default function SelectedWork() {
                   <div
                     className="crosshair-coord-badge"
                     style={{
-                      left: `${Math.min(crosshairPos.x + 14, 1320)}px`,
-                      top: `${Math.min(crosshairPos.y + 12, 600)}px`,
+                      left: `${Math.min(crosshairPos.x + 12, 1320)}px`,
+                      top: `${Math.min(crosshairPos.y + 10, 600)}px`,
                     }}
                   >
                     X {coordDisplay.xStr} · Y {coordDisplay.yStr}
@@ -226,15 +203,16 @@ export default function SelectedWork() {
                 </div>
               )}
 
-              {/* The 2x4 Project Cards Grid */}
+              {/* The 2x4 Project Cards Grid: Cards stay in place, filtered ones dim */}
               <div className="work-arch-grid">
-                {filteredProjects.map((proj) => {
+                {allProjects.map((proj) => {
                   const isHovered = hoveredId === proj.id;
+                  const isFilteredOut = activeFilter !== 'all' && proj.tag !== activeFilter;
 
                   return (
                     <div
                       key={proj.id}
-                      className={`work-arch-card ${isHovered ? 'is-active' : ''}`}
+                      className={`work-arch-card ${isHovered ? 'is-active' : ''} ${isFilteredOut ? 'is-filtered-out' : ''}`}
                       onMouseEnter={() => setHoveredId(proj.id)}
                       onFocus={() => setHoveredId(proj.id)}
                       tabIndex={0}
@@ -262,7 +240,7 @@ export default function SelectedWork() {
                           <span className="card-project-cat">{proj.category}</span>
                         </div>
 
-                        {/* Bottom-right Metric Tag (Revealed like in reference) */}
+                        {/* Bottom-right Metric Tag */}
                         <div className="card-meta-right">
                           <span className="card-metric-pill">
                             {proj.metric}

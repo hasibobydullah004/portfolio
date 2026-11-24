@@ -1181,7 +1181,22 @@ body {
   flex-direction: column;
   cursor: pointer;
   position: relative;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.25s ease, opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* Dimmed / Filtered Out Cards (from screen recording) */
+.work-arch-card.is-filtered-out {
+  opacity: 0.16;
+  filter: grayscale(80%) brightness(50%);
+  pointer-events: none;
+}
+
+/* Active / hovered card overrides dimming */
+.work-arch-card.is-filtered-out:hover,
+.work-arch-card.is-filtered-out.is-active {
+  opacity: 1;
+  filter: none;
+  pointer-events: auto;
 }
 
 /* Top ticker: coord left, year right */

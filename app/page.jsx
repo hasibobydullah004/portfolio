@@ -149,7 +149,7 @@ const workProjects = [
     name: 'Northwind Atelier',
     category: 'E-COMMERCE',
     tag: 'ecom',
-    metric: '+48%',
+    metric: '',
     image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -159,7 +159,7 @@ const workProjects = [
     name: 'Halden Coffee',
     category: 'BRAND + WEB',
     tag: 'brand',
-    metric: '120k Packs',
+    metric: '×3',
     image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -169,12 +169,12 @@ const workProjects = [
     name: 'Oslo Type Foundry',
     category: 'WEB',
     tag: 'web',
-    metric: 'Awwwards',
+    metric: '0.7s',
     image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'p4',
-    coord: '01',
+    coord: 'D1',
     year: '2025',
     name: 'Mira Architects',
     category: 'WEB',
@@ -189,7 +189,7 @@ const workProjects = [
     name: 'Kova Skincare',
     category: 'E-COMMERCE',
     tag: 'ecom',
-    metric: '4.8% Conv',
+    metric: '4.8%',
     image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -199,7 +199,7 @@ const workProjects = [
     name: 'Field Notes Radio',
     category: 'BRAND + WEB',
     tag: 'brand',
-    metric: 'Grammy Nom',
+    metric: '120k',
     image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -209,17 +209,17 @@ const workProjects = [
     name: 'Lumen Studio',
     category: 'WEB',
     tag: 'web',
-    metric: "Red Dot '24",
+    metric: '98',
     image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'p8',
-    coord: '02',
+    coord: 'D2',
     year: '2024',
     name: 'Atlas Bikes',
     category: 'E-COMMERCE',
     tag: 'ecom',
-    metric: '+84% Sales',
+    metric: '',
     image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=800&q=80',
   },
 ];
@@ -307,10 +307,10 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, [isCraftHovered]);
   const [activeWorkFilter, setActiveWorkFilter] = useState('all');
-  const [hoveredWorkId, setHoveredWorkId] = useState('p4'); // Mira Architects active as in user reference
+  const [hoveredWorkId, setHoveredWorkId] = useState(null);
   const gridContainerRef = useRef(null);
   const [crosshairPos, setCrosshairPos] = useState({ x: -1000, y: -1000, visible: false });
-  const [coordDisplay, setCoordDisplay] = useState({ xStr: '2222', yStr: '0268' });
+  const [coordDisplay, setCoordDisplay] = useState({ xStr: '0000', yStr: '0000' });
 
   const handleWorkMouseMove = useCallback((e) => {
     if (!gridContainerRef.current) return;
@@ -320,14 +320,15 @@ export default function HomePage() {
 
     if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
       setCrosshairPos({ x, y, visible: true });
-      const mappedX = Math.round(1000 + (x / rect.width) * 1500).toString().padStart(4, '0');
-      const mappedY = Math.round(100 + (y / rect.height) * 400).toString().padStart(4, '0');
-      setCoordDisplay({ xStr: mappedX, yStr: mappedY });
+      const xPixel = Math.round(e.clientX).toString().padStart(4, '0');
+      const yPixel = Math.round(e.clientY).toString().padStart(4, '0');
+      setCoordDisplay({ xStr: xPixel, yStr: yPixel });
     }
   }, []);
 
   const handleWorkMouseLeave = useCallback(() => {
     setCrosshairPos((prev) => ({ ...prev, visible: false }));
+    setHoveredWorkId(null);
   }, []);
 
   const [budgetVal, setBudgetVal] = useState(18);
@@ -724,14 +725,15 @@ export default function HomePage() {
                     </div>
                   )}
 
-                  {/* The 2x4 Project Cards Grid */}
+                  {/* The 2x4 Project Cards Grid: Cards stay in place, filtered ones dim */}
                   <div className="work-arch-grid">
-                    {filteredWork.map((proj) => {
+                    {workProjects.map((proj) => {
                       const isHovered = hoveredWorkId === proj.id;
+                      const isFilteredOut = activeWorkFilter !== 'all' && proj.tag !== activeWorkFilter;
                       return (
                         <div
                           key={proj.id}
-                          className={`work-arch-card ${isHovered ? 'is-active' : ''}`}
+                          className={`work-arch-card ${isHovered ? 'is-active' : ''} ${isFilteredOut ? 'is-filtered-out' : ''}`}
                           onMouseEnter={() => setHoveredIdSafe(setHoveredWorkId, proj.id)}
                           onFocus={() => setHoveredIdSafe(setHoveredWorkId, proj.id)}
                           tabIndex={0}
